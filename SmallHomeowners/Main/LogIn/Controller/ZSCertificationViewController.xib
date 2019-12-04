@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ZSCertificationViewController">
+            <connections>
+                <outlet property="noticeLabel" destination="wWA-du-Rvx" id="LCl-wv-DWB"/>
+                <outlet property="skipBtn" destination="2uc-uV-bAL" id="CuX-OO-wqb"/>
+                <outlet property="textLabel" destination="TM4-pY-Ggs" id="qgw-tk-Ouf"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="认证后，将获取更丰富的服务内容" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wWA-du-Rvx">
+                    <rect key="frame" x="15" y="84" width="220" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="dsG-oA-P6X"/>
+                        <constraint firstAttribute="width" constant="220" id="xLB-RN-dt6"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请进行资质认证" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TM4-pY-Ggs">
+                    <rect key="frame" x="15" y="40" width="150" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="150" id="8mk-3x-AyQ"/>
+                        <constraint firstAttribute="height" constant="44" id="e0r-om-kJ3"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2uc-uV-bAL">
+                    <rect key="frame" x="316" y="40" width="44" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="44" id="gzH-aq-VFM"/>
+                        <constraint firstAttribute="height" constant="44" id="sH7-IK-Xfe"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <state key="normal" title="跳过">
+                        <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="skipChooseIdentify:" destination="-1" eventType="touchUpInside" id="BT4-gs-gNA"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="wWA-du-Rvx" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="15" id="Nof-cD-oeF"/>
+                <constraint firstItem="wWA-du-Rvx" firstAttribute="top" secondItem="TM4-pY-Ggs" secondAttribute="bottom" id="Q7t-zv-ZdA"/>
+                <constraint firstItem="TM4-pY-Ggs" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="15" id="fbR-zb-Djm"/>
+                <constraint firstItem="2uc-uV-bAL" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" constant="20" id="uys-xg-pBg"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="2uc-uV-bAL" secondAttribute="trailing" constant="15" id="wkZ-LI-znz"/>
+                <constraint firstItem="TM4-pY-Ggs" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" constant="20" id="y38-4K-QT3"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
+        </view>
+    </objects>
+</document>
