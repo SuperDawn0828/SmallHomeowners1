@@ -258,6 +258,9 @@
 		B1FBF7032101C7C500BEC95C /* jcore-ios-1.1.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B1FBF7002101C7C500BEC95C /* jcore-ios-1.1.3.a */; };
 		B1FBF7052101CF1C00BEC95C /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B1FBF7042101CF1C00BEC95C /* libresolv.tbd */; };
 		E202C4CD2397FD8D008080DF /* ZSHomeApplyFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = E202C4CC2397FD8D008080DF /* ZSHomeApplyFooterView.m */; };
+		E22656D6239931790087D2E1 /* ZSIdentityAuthenticationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E22656D5239931790087D2E1 /* ZSIdentityAuthenticationViewController.m */; };
+		E22656D9239932D50087D2E1 /* ZSIdentityAuthentionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E22656D8239932D50087D2E1 /* ZSIdentityAuthentionCell.m */; };
+		E22656DC23993C860087D2E1 /* ZSIdentityAuthentionFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = E22656DB23993C860087D2E1 /* ZSIdentityAuthentionFooterView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -758,6 +761,12 @@
 		B1FBF7062101D60700BEC95C /* SmallHomeowners.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SmallHomeowners.entitlements; sourceTree = "<group>"; };
 		E202C4CB2397FD8D008080DF /* ZSHomeApplyFooterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHomeApplyFooterView.h; sourceTree = "<group>"; };
 		E202C4CC2397FD8D008080DF /* ZSHomeApplyFooterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHomeApplyFooterView.m; sourceTree = "<group>"; };
+		E22656D4239931790087D2E1 /* ZSIdentityAuthenticationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSIdentityAuthenticationViewController.h; sourceTree = "<group>"; };
+		E22656D5239931790087D2E1 /* ZSIdentityAuthenticationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSIdentityAuthenticationViewController.m; sourceTree = "<group>"; };
+		E22656D7239932D50087D2E1 /* ZSIdentityAuthentionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSIdentityAuthentionCell.h; sourceTree = "<group>"; };
+		E22656D8239932D50087D2E1 /* ZSIdentityAuthentionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSIdentityAuthentionCell.m; sourceTree = "<group>"; };
+		E22656DA23993C860087D2E1 /* ZSIdentityAuthentionFooterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSIdentityAuthentionFooterView.h; sourceTree = "<group>"; };
+		E22656DB23993C860087D2E1 /* ZSIdentityAuthentionFooterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSIdentityAuthentionFooterView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1545,6 +1554,8 @@
 				B1FB6B4D20E5BE75009A059E /* ZSAboutViewController.m */,
 				B1F7FF92213D1EC4008746DA /* ZSCalendarViewController.h */,
 				B1F7FF93213D1EC4008746DA /* ZSCalendarViewController.m */,
+				E22656D4239931790087D2E1 /* ZSIdentityAuthenticationViewController.h */,
+				E22656D5239931790087D2E1 /* ZSIdentityAuthenticationViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1567,6 +1578,10 @@
 				33E31FF821B7AE8300BC7048 /* ZSDaySignBigView.m */,
 				33E31FF721B7AE8300BC7048 /* ZSDaySignSmallView.h */,
 				33E31FF921B7AE8300BC7048 /* ZSDaySignSmallView.m */,
+				E22656D7239932D50087D2E1 /* ZSIdentityAuthentionCell.h */,
+				E22656D8239932D50087D2E1 /* ZSIdentityAuthentionCell.m */,
+				E22656DA23993C860087D2E1 /* ZSIdentityAuthentionFooterView.h */,
+				E22656DB23993C860087D2E1 /* ZSIdentityAuthentionFooterView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2120,6 +2135,7 @@
 				B135395120EB4E6100548369 /* UIView+WebCache.m in Sources */,
 				B15DFBB020E0BDC7000E23CE /* UIView+Extension.m in Sources */,
 				B1D39E7F20ECB739004289F6 /* DACircularProgressView.m in Sources */,
+				E22656D9239932D50087D2E1 /* ZSIdentityAuthentionCell.m in Sources */,
 				B135391220EB4E4700548369 /* NSButton+WebCache.m in Sources */,
 				B135398320EB4E9400548369 /* MJRefreshBackStateFooter.m in Sources */,
 				B135387720EA22BD00548369 /* ZSLenderInfoViewController.m in Sources */,
@@ -2228,6 +2244,7 @@
 				B135395720EB4E6100548369 /* UIImage+ForceDecode.m in Sources */,
 				B15ED9EF214128D200A8A150 /* TZProgressView.m in Sources */,
 				B135396A20EB4E7E00548369 /* MJRefreshComponent.m in Sources */,
+				E22656DC23993C860087D2E1 /* ZSIdentityAuthentionFooterView.m in Sources */,
 				B1A905C620E369DB00F5951D /* ZSOrderListViewController.m in Sources */,
 				B195D2EE20F5DF8200E14ECE /* ZSOrderModel.m in Sources */,
 				B1D39E7E20ECB739004289F6 /* DALabeledCircularProgressView.m in Sources */,
@@ -2237,6 +2254,7 @@
 				B1933CF520F35F2900F99445 /* ZSBaseWebViewController.m in Sources */,
 				B135399A20EB4EA000548369 /* UIScrollView+MJRefresh.m in Sources */,
 				B1D39E8420ECB739004289F6 /* PYPhotosViewController.m in Sources */,
+				E22656D6239931790087D2E1 /* ZSIdentityAuthenticationViewController.m in Sources */,
 				B1A905AB20E3346700F5951D /* IQKeyboardReturnKeyHandler.m in Sources */,
 				B15DFC3A20E0BDC7000E23CE /* ZSURLManager.m in Sources */,
 				B15DFEC020E1D2D4000E23CE /* ZSPersonalViewController.m in Sources */,

@@ -16,6 +16,7 @@
 #import "ZSCalendarViewController.h"
 #import <UShareUI/UShareUI.h>
 #import "ZSDaySignSmallView.h"
+#import "ZSIdentityAuthenticationViewController.h"
 
 @interface ZSPersonalViewController ()<ZSAlertViewDelegate>
 @property(nonatomic,strong)ZSDaySignSmallView   *daySignView;
@@ -185,7 +186,7 @@
         return 4;
     }
     else{
-        return 5;
+        return 6;
     }
 }
 
@@ -197,8 +198,8 @@
         cell.leftLabel.textColor = ZSColorListRight;
     }
     //赋值
-    NSArray *array_img   = @[@"my_personal_information_n",@"my_modify_password_n",@"my_about_n",@"my_clean_n",@"my_share_n"];
-    NSArray *array_title = @[@"个人信息",@"修改密码",@"关于",@"清除缓存",@"推荐给朋友"];
+    NSArray *array_img   = @[@"my_personal_information_n",@"my_modify_password_n",@"my_about_n",@"my_clean_n",@"my_share_n",@"my_share_n"];
+    NSArray *array_title = @[@"个人信息",@"修改密码",@"关于",@"清除缓存",@"推荐给朋友", @"身份认证"];
     cell.leftImage.image = [UIImage imageNamed:array_img[indexPath.row]];
     cell.leftLabel.text = array_title[indexPath.row];
     if (indexPath.row == 3) {
@@ -207,6 +208,10 @@
         CGFloat totalSize = size/1000.0/1000.0;
         cell.rightLabel.text = [NSString stringWithFormat:@"%.2f MB",totalSize];
         cell.rightLabel.textColor = ZSColorAllNotice;
+    } else if (indexPath.row == 5) {
+        cell.rightLabel.text = @"未认证";
+        cell.rightLabel.textColor = [UIColor colorWithRed:255/255.0 green:99/255.0 blue:90/255.0 alpha:1.0];
+        cell.pushImage.hidden = YES;
     }
     return cell;
 }
@@ -249,6 +254,11 @@
         }else{
             [self shareAPP];
         }
+    }
+    else if (indexPath.row == 5)
+    {
+        ZSIdentityAuthenticationViewController *controller = [[ZSIdentityAuthenticationViewController alloc] init];
+        [self.navigationController pushViewController:controller animated:YES];
     }
 }
 
