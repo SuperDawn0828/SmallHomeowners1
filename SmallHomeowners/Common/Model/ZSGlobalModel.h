@@ -14,7 +14,7 @@
 
 #pragma mark 服务器地址
 //测试服务器
-static NSString *const KTestServerUrl             = @"http://test.xiaofangzhu.com/house-agent-api";
+static NSString *const KTestServerUrl             = @"http://120.79.255.107:6083/house-agent-api";
 static NSString *const KTestServerImgUrl          = @"http://test.xiaofangzhu.com:4869/";
 static NSString *const KTestServerImgUploadUrl    = @"http://120.79.255.107:4869/upload";//图片上传地址
 //预生产服务器(带端口号)

@@ -10,6 +10,8 @@
 #import "ZSCreateOrderPersonInfoViewController.h"
 #import "ZSSingleLineTextTableViewCell.h"
 #import "ZSSLDataCollectionView.h"
+#import "ZSHomeApplyFooterView.h"
+
 typedef NS_ENUM(NSUInteger, alertViewTag) {
     deletePersonTag   = 0,     //删除人员信息
     changeMarryTag    = 1998,  //修改婚姻状况
@@ -270,6 +272,11 @@ typedef NS_ENUM(NSUInteger, alertViewTag) {
     headerView.backgroundColor = ZSColorWhite;
     self.tableView.tableHeaderView = headerView;
     
+    ZSHomeApplyFooterView *footerView = [[ZSHomeApplyFooterView alloc] init];
+    footerView.frame = CGRectMake(0,0,375,31);
+    footerView.layer.backgroundColor = [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1.0].CGColor;
+    self.tableView.tableFooterView = footerView;
+    
     //身份证正面
     self.frontImage = [[UIImageView alloc]initWithFrame:CGRectMake(GapWidth*2, GapWidth, imageWidth, imageHeight)];
     self.frontImage.image = [UIImage imageNamed:@"身份证正面"];
@@ -318,7 +325,7 @@ typedef NS_ENUM(NSUInteger, alertViewTag) {
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if (indexPath.row == self.dataArray.count-2) {
-        return  140;
+        return  130;
     }else  if (indexPath.row == self.dataArray.count-1) {
         return  120;
     }else{
@@ -334,20 +341,9 @@ typedef NS_ENUM(NSUInteger, alertViewTag) {
         cell = [[ZSSingleLineTextTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.delegate = self;
         if (indexPath.row == self.dataArray.count-2) {
-            
-            UIView *bdView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ZSWIDTH, 30)];
-            bdView.backgroundColor = ZSColorgreen;
-            [cell.contentView addSubview:bdView];
-            
-            UILabel *bdLba = [[UILabel alloc]initWithFrame:CGRectMake(20, 5, 200, 20)];
-            bdLba.text = @"不动产权证";
-            bdLba.font = [UIFont systemFontOfSize:13];
-            bdLba.textColor = ZSColorSecondTitle;
-            [bdView addSubview:bdLba];
-            
             self.dataCollectionView = [[ZSSLDataCollectionView alloc]init];
             self.dataCollectionView.tag = 500;
-            self.dataCollectionView.frame = CGRectMake(0, 30, ZSWIDTH,self.dataCollectionView.height);//top为-34是为了盖住分组title
+            self.dataCollectionView.frame = CGRectMake(0, 0, ZSWIDTH,self.dataCollectionView.height);//top为-34是为了盖住分组title
             self.dataCollectionView.backgroundColor = ZSViewBackgroundColor;
             self.dataCollectionView.delegate = self;
             self.dataCollectionView.isShowTitle = NO;
@@ -356,7 +352,19 @@ typedef NS_ENUM(NSUInteger, alertViewTag) {
             self.dataCollectionView.titleNameArray = [[NSMutableArray alloc]initWithObjects:@" ", nil];//随便传什么只要数组不为空就可以
             [cell.contentView addSubview:self.dataCollectionView];
             
+            UIView *bdView = [[UIView alloc]initWithFrame:CGRectMake(0, 100, ZSWIDTH, 30)];
+//            bdView.backgroundColor = ZSColorgreen;
+            [cell.contentView addSubview:bdView];
             
+            UILabel *bdLba = [[UILabel alloc]initWithFrame:CGRectMake(20, 5, 200, 20)];
+            bdLba.text = @"不动产权证";
+            bdLba.font = [UIFont systemFontOfSize:13];
+            bdLba.textColor = ZSColorSecondTitle;
+            [bdView addSubview:bdLba];
+            
+            UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 129, ZSWIDTH, 1)];
+            lineView.backgroundColor = ZSColorLine;
+            [cell.contentView addSubview:lineView];
         }
         if (indexPath.row == self.dataArray.count-1) {
             self.dataCollectionView1 = [[ZSSLDataCollectionView alloc]init];

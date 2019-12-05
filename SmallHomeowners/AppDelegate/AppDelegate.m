@@ -60,7 +60,7 @@ static NSString *const KWXRedirectURL  = @"http://mobile.umeng.com/social";     
     [NOTI_CENTER addObserver:self selector:@selector(clearUserAliasToJpush) name:KClearUserAliasToJpush object:nil];
 
     //配置服务器地址（//yes为生产,no为测试）
-    self.serverAddress = YES;
+    self.serverAddress = NO;
     if (self.serverAddress == YES) {
         //---------------------------------------------------预生产／正式环境---------------------------------------------------------
         //先判断本地储存的服务器地址是不是正式的

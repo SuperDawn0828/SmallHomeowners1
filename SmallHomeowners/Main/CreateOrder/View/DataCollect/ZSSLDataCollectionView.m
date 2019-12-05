@@ -304,9 +304,20 @@
             //预览资料
             cell.indexPath = indexPath;
             cell.fileModel = fileModel;
+            cell.nameLabel.text = nil;
+            cell.nameLabel.hidden = YES;
         }else{
             cell.deleteBtn.hidden = YES;
             cell.mainImageView.image = ImageName(@"list_add_n");
+            cell.nameLabel.text = @"继续上传";
+            cell.nameLabel.hidden = NO;
+//            if (indexPath.row != 0) {
+//                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 91, 81, 32)];
+//                label.font = [UIFont systemFontOfSize:12];
+//                label.textAlignment = NSTextAlignmentCenter;
+//                label.text = @"继续上传";
+//                [cell.contentView addSubview:label];
+//            }
         }
     }
     //2.两个加号或者一个加号

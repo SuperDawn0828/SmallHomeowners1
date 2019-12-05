@@ -257,6 +257,7 @@
 		B1FBF7022101C7C500BEC95C /* jpush-ios-3.0.5.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B1FBF6FF2101C7C500BEC95C /* jpush-ios-3.0.5.a */; };
 		B1FBF7032101C7C500BEC95C /* jcore-ios-1.1.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B1FBF7002101C7C500BEC95C /* jcore-ios-1.1.3.a */; };
 		B1FBF7052101CF1C00BEC95C /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B1FBF7042101CF1C00BEC95C /* libresolv.tbd */; };
+		E202C4CD2397FD8D008080DF /* ZSHomeApplyFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = E202C4CC2397FD8D008080DF /* ZSHomeApplyFooterView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -755,6 +756,8 @@
 		B1FBF7012101C7C500BEC95C /* JPUSHService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPUSHService.h; sourceTree = "<group>"; };
 		B1FBF7042101CF1C00BEC95C /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		B1FBF7062101D60700BEC95C /* SmallHomeowners.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SmallHomeowners.entitlements; sourceTree = "<group>"; };
+		E202C4CB2397FD8D008080DF /* ZSHomeApplyFooterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHomeApplyFooterView.h; sourceTree = "<group>"; };
+		E202C4CC2397FD8D008080DF /* ZSHomeApplyFooterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHomeApplyFooterView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1509,6 +1512,8 @@
 				B135387920EB024500548369 /* ZSSingleLineTextTableViewCell.m */,
 				B1D3AC5720EC9F850019DE7F /* ZSTextWithPhotosTableViewCell.h */,
 				B1D3AC5820EC9F850019DE7F /* ZSTextWithPhotosTableViewCell.m */,
+				E202C4CB2397FD8D008080DF /* ZSHomeApplyFooterView.h */,
+				E202C4CC2397FD8D008080DF /* ZSHomeApplyFooterView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2242,6 +2247,7 @@
 				B1CE543C215A205000F18035 /* ZSProductViewTableViewCell.m in Sources */,
 				B195D2EB20F49E3200E14ECE /* ZSPCOrderDetailModel.m in Sources */,
 				B135395520EB4E6100548369 /* SDWebImageWebPCoder.m in Sources */,
+				E202C4CD2397FD8D008080DF /* ZSHomeApplyFooterView.m in Sources */,
 				B135398520EB4E9400548369 /* MJRefreshAutoStateFooter.m in Sources */,
 				B1D3AC5920EC9F850019DE7F /* ZSTextWithPhotosTableViewCell.m in Sources */,
 				B1FB6B5A20E5C5D3009A059E /* ZSChangePhoneViewController.m in Sources */,
@@ -2451,7 +2457,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
-				DEVELOPMENT_TEAM = 3F2735QP6E;
+				DEVELOPMENT_TEAM = K93GK25J3C;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2463,7 +2469,7 @@
 				);
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_PREFIX_HEADER = "/Users/junjiejiang/Desktop/SmallHomeowners1/SmallHomeowners/Supporting Files/PrefixHeader.pch";
+				GCC_PREFIX_HEADER = "SmallHomeowners/Supporting Files/PrefixHeader.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/SmallHomeowners/Resource/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2478,7 +2484,7 @@
 				);
 				OTHER_CFLAGS = "-fno-exceptions";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.xiaofangzhu.agents;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xiaofangzhu.agentsgdk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2496,7 +2502,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
-				DEVELOPMENT_TEAM = 3F2735QP6E;
+				DEVELOPMENT_TEAM = K93GK25J3C;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2508,7 +2514,7 @@
 				);
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_PREFIX_HEADER = "/Users/junjiejiang/Desktop/SmallHomeowners1/SmallHomeowners/Supporting Files/PrefixHeader.pch";
+				GCC_PREFIX_HEADER = "SmallHomeowners/Supporting Files/PrefixHeader.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/SmallHomeowners/Resource/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2523,7 +2529,7 @@
 				);
 				OTHER_CFLAGS = "-fno-exceptions";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.xiaofangzhu.agents;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xiaofangzhu.agentsgdk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";

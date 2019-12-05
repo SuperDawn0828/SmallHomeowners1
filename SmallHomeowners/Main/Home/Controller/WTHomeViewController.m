@@ -41,7 +41,8 @@
     global.prdType = @"1084";
     global.pcOrderDetailModel = nil;
     createVC.personType = ZSFromCreateOrderWithAdd;
-    createVC.roleTypeString = [NSString stringWithFormat:@"%@信息",[ZSGlobalModel changeLoanString:@"贷款人"]];
+//    createVC.roleTypeString = [NSString stringWithFormat:@"%@信息",[ZSGlobalModel changeLoanString:@"贷款人"]];
+    createVC.roleTypeString = @"业务申请";
     [self.navigationController pushViewController:createVC animated:YES];
     
 }
