@@ -261,6 +261,8 @@
 		E22656D6239931790087D2E1 /* ZSIdentityAuthenticationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E22656D5239931790087D2E1 /* ZSIdentityAuthenticationViewController.m */; };
 		E22656D9239932D50087D2E1 /* ZSIdentityAuthentionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E22656D8239932D50087D2E1 /* ZSIdentityAuthentionCell.m */; };
 		E22656DC23993C860087D2E1 /* ZSIdentityAuthentionFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = E22656DB23993C860087D2E1 /* ZSIdentityAuthentionFooterView.m */; };
+		E22656DF239A89680087D2E1 /* ZSOrderDeatilPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E22656DE239A89680087D2E1 /* ZSOrderDeatilPhotoCell.m */; };
+		E22656E2239A8CF40087D2E1 /* ZSOrderDetailPhotoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = E22656E1239A8CF40087D2E1 /* ZSOrderDetailPhotoItem.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -767,6 +769,10 @@
 		E22656D8239932D50087D2E1 /* ZSIdentityAuthentionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSIdentityAuthentionCell.m; sourceTree = "<group>"; };
 		E22656DA23993C860087D2E1 /* ZSIdentityAuthentionFooterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSIdentityAuthentionFooterView.h; sourceTree = "<group>"; };
 		E22656DB23993C860087D2E1 /* ZSIdentityAuthentionFooterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSIdentityAuthentionFooterView.m; sourceTree = "<group>"; };
+		E22656DD239A89680087D2E1 /* ZSOrderDeatilPhotoCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSOrderDeatilPhotoCell.h; sourceTree = "<group>"; };
+		E22656DE239A89680087D2E1 /* ZSOrderDeatilPhotoCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSOrderDeatilPhotoCell.m; sourceTree = "<group>"; };
+		E22656E0239A8CF40087D2E1 /* ZSOrderDetailPhotoItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSOrderDetailPhotoItem.h; sourceTree = "<group>"; };
+		E22656E1239A8CF40087D2E1 /* ZSOrderDetailPhotoItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSOrderDetailPhotoItem.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1771,6 +1777,10 @@
 				B135388C20EB232600548369 /* ZSWSNewLeftRightCell.h */,
 				B135388A20EB232600548369 /* ZSWSNewLeftRightCell.m */,
 				B135388B20EB232600548369 /* ZSWSNewLeftRightCell.xib */,
+				E22656DD239A89680087D2E1 /* ZSOrderDeatilPhotoCell.h */,
+				E22656DE239A89680087D2E1 /* ZSOrderDeatilPhotoCell.m */,
+				E22656E0239A8CF40087D2E1 /* ZSOrderDetailPhotoItem.h */,
+				E22656E1239A8CF40087D2E1 /* ZSOrderDetailPhotoItem.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2279,6 +2289,7 @@
 				B1960C1A20EC504900D15436 /* ZSCreateOrderPersonInfoCell.m in Sources */,
 				B15BB9F220E6043B007E6CF5 /* ZSHomeTableViewCell.m in Sources */,
 				B15ED9FB214128D200A8A150 /* UIView+Layout.m in Sources */,
+				E22656DF239A89680087D2E1 /* ZSOrderDeatilPhotoCell.m in Sources */,
 				B11583F120E5DF1B0019204D /* ZSPositionViewController.m in Sources */,
 				B135394E20EB4E6100548369 /* UIImageView+HighlightedWebCache.m in Sources */,
 				B1A9059E20E3346700F5951D /* IQTextView.m in Sources */,
@@ -2299,6 +2310,7 @@
 				B195D2E820F4603500E14ECE /* ZSAllListModel.m in Sources */,
 				B135392720EB4E5300548369 /* SDWebImageCoderHelper.m in Sources */,
 				085942B8238D2041003D8830 /* ZSHomeApplyViewController.m in Sources */,
+				E22656E2239A8CF40087D2E1 /* ZSOrderDetailPhotoItem.m in Sources */,
 				B135387420EA1A1700548369 /* ZSCreateOrderPopupView.m in Sources */,
 				B135395020EB4E6100548369 /* UIImage+GIF.m in Sources */,
 				33E31FFC21B7AE8400BC7048 /* ZSDaySignSmallView.m in Sources */,

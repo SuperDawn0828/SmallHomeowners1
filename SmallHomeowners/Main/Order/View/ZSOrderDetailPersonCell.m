@@ -10,8 +10,11 @@
 
 @interface ZSOrderDetailPersonCell  ()
 @property(nonatomic,strong)UIImageView *IdCardImage; //身份证照片
+@property(nonatomic,strong)UILabel     *nameTitleLabel;   //姓名
 @property(nonatomic,strong)UILabel     *nameLabel;   //姓名
+@property(nonatomic,strong)UILabel     *idCardTitleLabel; //身份证
 @property(nonatomic,strong)UILabel     *idCardLabel; //身份证
+@property(nonatomic,strong)UILabel     *phoneTitleLabel;  //手机号
 @property(nonatomic,strong)UILabel     *phoneLabel;  //手机号
 @end
 
@@ -43,25 +46,39 @@
     self.nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.IdCardImage.right + 15, 10, ZSWIDTH-GapWidth*3-100, 25)];
     self.nameLabel.font = FontSecondTitle;
     self.nameLabel.numberOfLines = 0;
-    self.nameLabel.textColor = ZSColorListRight;
+    self.nameLabel.textColor = [UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0];
+    self.nameLabel.textAlignment = NSTextAlignmentRight;
     [self addSubview:self.nameLabel];
+    
+    self.nameTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.IdCardImage.right + 15, 10, ZSWIDTH-GapWidth*3-100, 25)];
+    self.nameTitleLabel.font = FontSecondTitle;
+    self.nameTitleLabel.numberOfLines = 0;
+    self.nameTitleLabel.textColor = [UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0];
+    [self addSubview:self.nameTitleLabel];
     
     //身份证号
     self.idCardLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.IdCardImage.right + 15, self.nameLabel.bottom, ZSWIDTH-GapWidth*3-100, 25)];
     self.idCardLabel.font = FontSecondTitle;
-    self.idCardLabel.textColor = ZSColorListRight;
+    self.idCardLabel.textColor = [UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0];
+    self.idCardLabel.textAlignment = NSTextAlignmentRight;
     [self addSubview:self.idCardLabel];
+    
+    self.idCardTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.IdCardImage.right + 15, self.nameLabel.bottom, ZSWIDTH-GapWidth*3-100, 25)];
+    self.idCardTitleLabel.font = FontSecondTitle;
+    self.idCardTitleLabel.textColor = [UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0];
+    [self addSubview:self.idCardTitleLabel];
     
     //手机号
     self.phoneLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.IdCardImage.right + 15, self.idCardLabel.bottom, ZSWIDTH-GapWidth*3-100, 25)];
     self.phoneLabel.font = FontSecondTitle;
-    self.phoneLabel.textColor = ZSColorListRight;
+    self.phoneLabel.textColor = [UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0];
+    self.phoneLabel.textAlignment = NSTextAlignmentRight;
     [self addSubview:self.phoneLabel];
     
-    //pushImage
-    UIImageView *imgview = [[UIImageView alloc]initWithFrame:CGRectMake(ZSWIDTH-30, (95-15)/2, 15, 15)];
-    imgview.image = [UIImage imageNamed:@"list_arrow_n"];
-    [self addSubview:imgview];
+    self.phoneTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.IdCardImage.right + 15, self.idCardLabel.bottom, ZSWIDTH-GapWidth*3-100, 25)];
+    self.phoneTitleLabel.font = FontSecondTitle;
+    self.phoneTitleLabel.textColor = [UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0];
+    [self addSubview:self.phoneTitleLabel];
 }
 
 - (void)setModel:(CustomersModel *)model
@@ -79,25 +96,20 @@
     //姓名
     if (model.name) {
         NSString *roleString = [ZSGlobalModel getReleationStateWithCode:model.releation];
-        NSMutableAttributedString *nutableString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@: %@",roleString,model.name]];
-        [nutableString addAttribute:NSForegroundColorAttributeName value:ZSColorListLeft range:NSMakeRange(0,roleString.length+1)];
-        self.nameLabel.attributedText = nutableString;
-        self.nameLabel.width = [ZSTool getStringWidth:self.nameLabel.text withframe:CGSizeMake(ZSWIDTH-100, 35) withSizeFont:[UIFont systemFontOfSize:15]];
-        self.personnelTagLabel.left = self.nameLabel.right+5;
+        self.nameTitleLabel.text = [[NSString alloc] initWithFormat:@"%@:", roleString];
+        self.nameLabel.text = model.name;
     }
     
     //身份证号
     if (model.identityNo) {
-        NSMutableAttributedString *nutableString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"身份证号: %@",model.identityNo]];
-        [nutableString addAttribute:NSForegroundColorAttributeName value:ZSColorListLeft range:NSMakeRange(0,5)];
-        self.idCardLabel.attributedText = nutableString;
+        self.idCardTitleLabel.text = @"身份证号:";
+        self.idCardLabel.text = model.identityNo;
     }
     
     //手机号
     if (model.cellphone) {
-        NSMutableAttributedString *nutableString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"手机号: %@",model.cellphone]];
-        [nutableString addAttribute:NSForegroundColorAttributeName value:ZSColorListLeft range:NSMakeRange(0,4)];
-        self.phoneLabel.attributedText = nutableString;
+        self.phoneTitleLabel.text = @"手机号:";
+        self.phoneLabel.text = model.cellphone;
     }
 }
 
