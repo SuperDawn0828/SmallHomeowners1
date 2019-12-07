@@ -13,6 +13,7 @@
 #import "ZSWSNewLeftRightCell.h"
 #import "ZSOrderPersonDetailViewController.h"
 #import "ZSOrderDeatilPhotoCell.h"
+#import "ZSBillDetailController.h"
 
 @interface ZSOrderDetailViewController ()<ZSTextWithPhotosTableViewCellDelegate>
 @property (nonatomic,strong) UIView         *topHeaderView;   //
@@ -330,7 +331,8 @@
 }
 
 - (void)billDetailButtonAction:(UIButton *)sender {
-    
+    ZSBillDetailController *controller = [[ZSBillDetailController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)callBtnAction:(UIButton *)sender

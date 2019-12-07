@@ -263,6 +263,10 @@
 		E22656DC23993C860087D2E1 /* ZSIdentityAuthentionFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = E22656DB23993C860087D2E1 /* ZSIdentityAuthentionFooterView.m */; };
 		E22656DF239A89680087D2E1 /* ZSOrderDeatilPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E22656DE239A89680087D2E1 /* ZSOrderDeatilPhotoCell.m */; };
 		E22656E2239A8CF40087D2E1 /* ZSOrderDetailPhotoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = E22656E1239A8CF40087D2E1 /* ZSOrderDetailPhotoItem.m */; };
+		E22656E5239A9FC30087D2E1 /* ZSBillDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = E22656E4239A9FC30087D2E1 /* ZSBillDetailController.m */; };
+		E22656EC239B381E0087D2E1 /* ZSRepaymentDetailsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E22656EA239B381E0087D2E1 /* ZSRepaymentDetailsCell.m */; };
+		E22656ED239B381E0087D2E1 /* ZSRepaymentDetailsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E22656EB239B381E0087D2E1 /* ZSRepaymentDetailsCell.xib */; };
+		E22656F0239B41C10087D2E1 /* ZSRepaymentDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E22656EF239B41C10087D2E1 /* ZSRepaymentDetailModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -773,6 +777,13 @@
 		E22656DE239A89680087D2E1 /* ZSOrderDeatilPhotoCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSOrderDeatilPhotoCell.m; sourceTree = "<group>"; };
 		E22656E0239A8CF40087D2E1 /* ZSOrderDetailPhotoItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSOrderDetailPhotoItem.h; sourceTree = "<group>"; };
 		E22656E1239A8CF40087D2E1 /* ZSOrderDetailPhotoItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSOrderDetailPhotoItem.m; sourceTree = "<group>"; };
+		E22656E3239A9FC30087D2E1 /* ZSBillDetailController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSBillDetailController.h; sourceTree = "<group>"; };
+		E22656E4239A9FC30087D2E1 /* ZSBillDetailController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSBillDetailController.m; sourceTree = "<group>"; };
+		E22656E9239B381E0087D2E1 /* ZSRepaymentDetailsCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSRepaymentDetailsCell.h; sourceTree = "<group>"; };
+		E22656EA239B381E0087D2E1 /* ZSRepaymentDetailsCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSRepaymentDetailsCell.m; sourceTree = "<group>"; };
+		E22656EB239B381E0087D2E1 /* ZSRepaymentDetailsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ZSRepaymentDetailsCell.xib; sourceTree = "<group>"; };
+		E22656EE239B41C10087D2E1 /* ZSRepaymentDetailModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSRepaymentDetailModel.h; sourceTree = "<group>"; };
+		E22656EF239B41C10087D2E1 /* ZSRepaymentDetailModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSRepaymentDetailModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1761,6 +1772,8 @@
 				B195D2EA20F49E3200E14ECE /* ZSPCOrderDetailModel.m */,
 				B195D2EC20F5DF8200E14ECE /* ZSOrderModel.h */,
 				B195D2ED20F5DF8200E14ECE /* ZSOrderModel.m */,
+				E22656EE239B41C10087D2E1 /* ZSRepaymentDetailModel.h */,
+				E22656EF239B41C10087D2E1 /* ZSRepaymentDetailModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1781,6 +1794,9 @@
 				E22656DE239A89680087D2E1 /* ZSOrderDeatilPhotoCell.m */,
 				E22656E0239A8CF40087D2E1 /* ZSOrderDetailPhotoItem.h */,
 				E22656E1239A8CF40087D2E1 /* ZSOrderDetailPhotoItem.m */,
+				E22656E9239B381E0087D2E1 /* ZSRepaymentDetailsCell.h */,
+				E22656EA239B381E0087D2E1 /* ZSRepaymentDetailsCell.m */,
+				E22656EB239B381E0087D2E1 /* ZSRepaymentDetailsCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1796,6 +1812,8 @@
 				B1F7FF8D2138DE62008746DA /* ZSOrderPersonDetailViewController.m */,
 				B135388F20EB4B3000548369 /* ZSCreditReportViewController.h */,
 				B135389020EB4B3000548369 /* ZSCreditReportViewController.m */,
+				E22656E3239A9FC30087D2E1 /* ZSBillDetailController.h */,
+				E22656E4239A9FC30087D2E1 /* ZSBillDetailController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -2082,6 +2100,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E22656ED239B381E0087D2E1 /* ZSRepaymentDetailsCell.xib in Resources */,
 				B135388E20EB232600548369 /* ZSWSNewLeftRightCell.xib in Resources */,
 				B1960C1620EB72CC00D15436 /* ZSCreateOrderTopView.xib in Resources */,
 				B15DFBB920E0BDC7000E23CE /* Assets.xcassets in Resources */,
@@ -2185,6 +2204,7 @@
 				B195D2F120F72F9D00E14ECE /* ZSWSFileCollectionModel.m in Sources */,
 				B15ED9FA214128D200A8A150 /* TZPhotoPreviewCell.m in Sources */,
 				B15DFBB820E0BDC7000E23CE /* ZSBaseViewController.m in Sources */,
+				E22656F0239B41C10087D2E1 /* ZSRepaymentDetailModel.m in Sources */,
 				B1A905C520E369DB00F5951D /* ZSOrderListTableViewCell.m in Sources */,
 				B1A905DD20E46A3900F5951D /* ZSCertificationViewController.m in Sources */,
 				B1960C2420EC5CB000D15436 /* ChineseToPinyin.m in Sources */,
@@ -2259,6 +2279,7 @@
 				B195D2EE20F5DF8200E14ECE /* ZSOrderModel.m in Sources */,
 				B1D39E7E20ECB739004289F6 /* DALabeledCircularProgressView.m in Sources */,
 				B195D2F620F7300000E14ECE /* JWCollectionHeaderView.m in Sources */,
+				E22656EC239B381E0087D2E1 /* ZSRepaymentDetailsCell.m in Sources */,
 				B135386820E9BBB200548369 /* LocationManager.m in Sources */,
 				B15DFBB220E0BDC7000E23CE /* ZSTool.m in Sources */,
 				B1933CF520F35F2900F99445 /* ZSBaseWebViewController.m in Sources */,
@@ -2296,6 +2317,7 @@
 				B135392620EB4E5300548369 /* SDImageCacheConfig.m in Sources */,
 				B135390220EB4E3200548369 /* FLAnimatedImageView.m in Sources */,
 				B15DFCE620E0C0AF000E23CE /* AFNetworkReachabilityManager.m in Sources */,
+				E22656E5239A9FC30087D2E1 /* ZSBillDetailController.m in Sources */,
 				B135389120EB4B3000548369 /* ZSCreditReportViewController.m in Sources */,
 				B15ED9F9214128D200A8A150 /* TZVideoPlayerController.m in Sources */,
 				B135395820EB4E6100548369 /* SDWebImagePrefetcher.m in Sources */,
