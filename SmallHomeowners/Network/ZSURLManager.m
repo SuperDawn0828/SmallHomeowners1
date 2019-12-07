@@ -111,6 +111,12 @@
     return [NSString stringWithFormat:@"%@/zs/agentHomepageFunc/getDaySign",APPDELEGATE.zsurlHead];
 }
 
+#pragma 实名认证
++ (NSString *)updateUserIdentityNo
+{
+    return [NSString stringWithFormat:@"%@/zs/agentUser/updateUserIdentityNo",APPDELEGATE.zsurlHead];
+}
+
 #pragma mark **************************************************************首页***************************************************************/
 #pragma mark 获取首页轮播图
 +(NSString *)getHomeCarousels

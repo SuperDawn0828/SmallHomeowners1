@@ -92,7 +92,7 @@
     [calendar setTimeZone: timeZone];
     NSCalendarUnit calendarUnit = NSCalendarUnitWeekday;
     NSDateComponents *theComponents = [calendar components:calendarUnit fromDate:date];
-    self.weekdayLabel.text = [weekdays objectAtIndex:theComponents.weekday];
+    self.weekdayLabel.text = [weekdays objectAtIndex:MIN(theComponents.weekday, 6) ];
 }
 
 @end
