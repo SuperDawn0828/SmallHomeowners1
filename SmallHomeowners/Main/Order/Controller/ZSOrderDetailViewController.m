@@ -25,7 +25,8 @@
 //@property (nonatomic,strong) UIImageView    *jumpImage;        //跳转图片
 @property (nonatomic,strong) NSMutableArray *personDatdArray;  //人员信息
 @property (nonatomic,strong) NSMutableArray *loanDatdArray;    //贷款信息
-@property (nonatomic,strong) NSMutableArray *houseDatdArray;   //房产信息
+@property (nonatomic,strong) NSMutableArray<ZSDynamicDataModel *> *houseDatdArray;   //房产信息
+@property (nonatomic,strong) NSMutableArray<ZSDynamicDataModel *> *bankCreditsArray;  //信证信息
 @property (nonatomic,strong) NSMutableArray *orderDatdArray;   //订单信息
 @end
 
@@ -39,12 +40,20 @@
     return _loanDatdArray;
 }
 
-- (NSMutableArray *)houseDatdArray
+- (NSMutableArray<ZSDynamicDataModel *> *)houseDatdArray
 {
     if (_houseDatdArray == nil) {
         _houseDatdArray = [[NSMutableArray alloc]init];
     }
     return _houseDatdArray;
+}
+
+- (NSMutableArray<ZSDynamicDataModel *> *)bankCreditsArray
+{
+    if (_bankCreditsArray == nil) {
+        _bankCreditsArray = [[NSMutableArray alloc] initWithCapacity:0];
+    }
+    return _bankCreditsArray;
 }
 
 - (NSMutableArray *)orderDatdArray
@@ -105,6 +114,7 @@
                                   }.mutableCopy;
     [ZSRequestManager requestWithParameter:dict url:[ZSURLManager getAgentOrderDetail] SuccessBlock:^(NSDictionary *dic) {
         //订单详情存值
+        NSLog(@"%@", dic);
         global.pcOrderDetailModel = [ZSPCOrderDetailModel yy_modelWithDictionary:dic[@"respData"]];
         //数据填充
         [weakSelf fillTheData];
@@ -177,6 +187,13 @@
         realEstateModel.rightData = [self getNeedUploadFilesString];
     }
     [self.houseDatdArray addObject:realEstateModel];
+    
+    //信证信息
+    ZSDynamicDataModel *bankCreditsModel = [[ZSDynamicDataModel alloc]init];
+    bankCreditsModel.fieldMeaning = @"信证信息";
+    bankCreditsModel.isNecessary = @"0";
+    bankCreditsModel.rightData = global.pcOrderDetailModel.customers.firstObject.bankCredits;
+    [self.bankCreditsArray addObject:bankCreditsModel];
     
 //    //楼盘名称
 //    ZSOrderModel *nameModel = [[ZSOrderModel alloc]init];
@@ -314,6 +331,7 @@
     self.billDetailButton.titleLabel.font = [UIFont systemFontOfSize:14];
     [self.billDetailButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.billDetailButton addTarget:self action:@selector(billDetailButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    self.billDetailButton.hidden = self.isFromCreateOrder;
     [self.topHeaderView addSubview:self.billDetailButton];
     
     //联系客户经理按钮
@@ -332,6 +350,7 @@
 
 - (void)billDetailButtonAction:(UIButton *)sender {
     ZSBillDetailController *controller = [[ZSBillDetailController alloc] init];
+    controller.orderIDString = self.orderIDString;
     [self.navigationController pushViewController:controller animated:YES];
 }
 
@@ -372,7 +391,7 @@
     else if (section == 2) {
         return self.houseDatdArray.count;
     } else if (section == 3) {
-        return 1;
+        return self.bankCreditsArray.count;
     }
     else {
         return self.orderDatdArray.count;
@@ -441,10 +460,12 @@
     else if (indexPath.section == 2) {
 //        self.houseDatdArray[indexPath.row];
         ZSOrderDeatilPhotoCell *cell = (ZSOrderDeatilPhotoCell *)[tableView dequeueReusableCellWithIdentifier:@"ZSOrderDeatilPhotoCell"];
+        cell.urlStrings = self.houseDatdArray[indexPath.row].rightData;
         return cell;
 
     } else if (indexPath.section == 3) {
         ZSOrderDeatilPhotoCell *cell = (ZSOrderDeatilPhotoCell *)[tableView dequeueReusableCellWithIdentifier:@"ZSOrderDeatilPhotoCell"];
+        cell.urlStrings = self.bankCreditsArray[indexPath.row].rightData;
         return cell;
     }
     //订单信息

@@ -695,6 +695,7 @@ typedef NS_ENUM(NSUInteger, alertViewTag) {
     __weak typeof(self) weakSelf = self;
     [ZSRequestManager requestWithParameter:[self uploadOrderParameter] url:[ZSURLManager getAddOrUpdateCustomer] SuccessBlock:^(NSDictionary *dic) {
         //订单详情存值
+        NSLog(@"%@", dic);
         global.pcOrderDetailModel = [ZSPCOrderDetailModel yy_modelWithDictionary:dic[@"respData"]];
         //页面跳转
         ZSCreateOrderPersonInfoViewController *createVC = [[ZSCreateOrderPersonInfoViewController alloc]init];
@@ -752,6 +753,7 @@ typedef NS_ENUM(NSUInteger, alertViewTag) {
         @"releation":[ZSGlobalModel getReleationCodeWithState:self.titleLabel.text],
         @"name":self.dataArray[0].rightData ? self.dataArray[0].rightData : @"",
         @"identityNo":self.dataArray[1].rightData ? self.dataArray[1].rightData : @"",
+        @"loanAmount":self.dataArray[3].rightData ? self.dataArray[3].rightData : @""
     }.mutableCopy;
     //身份证正面
     if (self.urlFront) {
@@ -782,15 +784,27 @@ typedef NS_ENUM(NSUInteger, alertViewTag) {
     }
     else
     {
-        //户口本
-        if (self.dataArray[3].rightData.length) {
-            NSDictionary *newDic = [NSString stringToDictory:self.dataArray[3].rightData];
-            [dict setObject:newDic[@"houseRegisterMaster"] ? newDic[@"houseRegisterMaster"] : @"" forKey:@"houseRegisterMaster"];
-            [dict setObject:newDic[@"houseRegisterPersonal"] ? newDic[@"houseRegisterPersonal"] : @"" forKey:@"houseRegisterPersonal"];
+        //不动产证
+        if (self.dataCollectionView.itemArray.count > 0) {
+            NSMutableArray<NSString *> *list = [[NSMutableArray alloc] initWithCapacity:0];
+            for (ZSWSFileCollectionModel *element in (NSMutableArray *)[self.dataCollectionView.itemArray firstObject]) {
+                if (element.dataUrl) {
+                    [list addObject:element.dataUrl];
+                }
+            }
+            NSString *string = [list componentsJoinedByString:@","];
+            [dict setObject:string forKey:@"houseEstateCredentials"];
         }
         //央行征信报告
-        if (self.dataArray[4].rightData.length) {
-            [dict setObject:self.dataArray[4].rightData forKey:@"bankCredits"];
+        if (self.dataCollectionView1.itemArray.count > 0) {
+            NSMutableArray<NSString *> *list = [[NSMutableArray alloc] initWithCapacity:0];
+            for (ZSWSFileCollectionModel *element in (NSMutableArray *)[self.dataCollectionView1.itemArray firstObject]) {
+                if (element.dataUrl) {
+                    [list addObject:element.dataUrl];
+                }
+            }
+            NSString *string = [list componentsJoinedByString:@","];
+            [dict setObject:string forKey:@"bankCredits"];
         }
     }
     //订单id

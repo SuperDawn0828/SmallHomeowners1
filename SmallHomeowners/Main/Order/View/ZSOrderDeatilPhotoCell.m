@@ -4,6 +4,8 @@
 @interface ZSOrderDeatilPhotoCell ()<UICollectionViewDelegate, UICollectionViewDataSource>
 @property (nonatomic, strong) UICollectionView *collectionView;
 
+@property (nonatomic, strong) NSArray<NSString *> *list;
+
 @end
 
 @implementation ZSOrderDeatilPhotoCell
@@ -36,18 +38,46 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 0;
+    return self.list.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *string = self.list[indexPath.row];
     ZSOrderDetailPhotoItem *cell = (ZSOrderDetailPhotoItem *)[collectionView dequeueReusableCellWithReuseIdentifier:@"ZSOrderDetailPhotoItem" forIndexPath:indexPath];
+    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@?w=200",APPDELEGATE.zsImageUrl,string]] placeholderImage:defaultImage_rectangle];
     return cell;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    
+    ZSOrderDeatilPhotoCell *cell = (ZSOrderDeatilPhotoCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    UIImageView *imageView = cell.imageView;
+    if (imageView.image) {
+        //1.创建photoBroseView对象
+        PYPhotoBrowseView *photoBroseView = [[PYPhotoBrowseView alloc] initWithFrame:CGRectMake(0, 0, ZSWIDTH, ZSHEIGHT)];
+        //2.赋值
+        if (self.list.count > 0) {
+            NSMutableArray<NSString *> *urlList = [[NSMutableArray alloc] initWithCapacity:0];
+            for (NSString *element in self.list) {
+                [urlList addObject:[NSString stringWithFormat:@"%@%@",APPDELEGATE.zsImageUrl, element]];
+            }
+            photoBroseView.imagesURL = urlList;
+        }
+        else {
+            photoBroseView.images = @[defaultImage_rectangle];
+        }
+        photoBroseView.showFromView = cell;
+        photoBroseView.hiddenToView = cell;
+        photoBroseView.currentIndex = indexPath.row;
+        //3.显示
+        [photoBroseView show];
+    }
 }
 
-
+- (void)setUrlStrings:(NSString *)urlStrings {
+    _urlStrings = urlStrings;
+    NSArray<NSString *> *list = [urlStrings componentsSeparatedByString:@","];
+    self.list = list;
+    [self.collectionView reloadData];
+}
 
 @end

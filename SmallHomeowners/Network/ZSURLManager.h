@@ -110,6 +110,9 @@
 #pragma 实名认证
 + (NSString *)updateUserIdentityNo;
 
+#pragma mark 获取订单还款计划
++ (NSString *)getOrderRepayment;
+
 #pragma mark ********************************消息*******************************/
 #pragma mark 获取消息列表
 +(NSString *)getNotifacationList;

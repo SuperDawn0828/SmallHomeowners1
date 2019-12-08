@@ -203,6 +203,12 @@
     return [NSString stringWithFormat:@"%@/zs/agentOrder/submitLoan",APPDELEGATE.zsurlHead];
 }
 
+#pragma mark 获取订单还款计划
++ (NSString *)getOrderRepayment
+{
+    return [NSString stringWithFormat:@"%@/zs/agentOrder/getOrderRepayment", APPDELEGATE.zsurlHead];
+}
+
 #pragma mark **************************************************************消息***************************************************************/
 #pragma mark 获取消息列表
 +(NSString *)getNotifacationList

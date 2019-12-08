@@ -6,4 +6,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+@interface ZSBillDetailController (Request)
+
+- (void)requestData;
+
+@end
+
 NS_ASSUME_NONNULL_END

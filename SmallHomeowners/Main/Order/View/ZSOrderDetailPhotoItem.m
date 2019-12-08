@@ -18,6 +18,11 @@
     return self;
 }
 
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    self.imageView.frame = self.bounds;
+}
+
 - (void)setupSubviews {
     self.imageView = [[UIImageView alloc]  init];
     self.imageView.layer.cornerRadius = 5;

@@ -2,16 +2,21 @@
 #import "ZSWSNewLeftRightCell.h"
 #import "ZSOrderModel.h"
 #import "ZSRepaymentDetailsCell.h"
+#import "ZSRepaymentDetailModel.h"
 
 @interface ZSBillDetailController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) NSMutableArray *personDataList;
+
+@property (nonatomic, strong) NSArray<ZSRepaymentRepayment *> *repaymentList;
 
 @property (nonatomic, strong) UIView *headerView;
 
 @property (nonatomic, strong) UIImageView *stateImageView;
 
 @property (nonatomic, strong) UILabel *stateLabel;
+
+@property (nonatomic, strong) ZSRepaymentDetailModel *repaymentDetailModel;
 
 @end
 
@@ -29,26 +34,7 @@
     [self configureTopView];
     
     self.personDataList = [[NSMutableArray alloc] initWithCapacity:0];
-    
-    ZSOrderModel *orderModel1 = [[ZSOrderModel alloc] init];
-    orderModel1.leftName = @"贷款金额";
-    [self.personDataList addObject:orderModel1];
-    
-    ZSOrderModel *orderModel2 = [[ZSOrderModel alloc] init];
-    orderModel2.leftName = @"还款期数";
-    [self.personDataList addObject:orderModel2];
-    
-    ZSOrderModel *orderModel3 = [[ZSOrderModel alloc] init];
-    orderModel3.leftName = @"还款日";
-    [self.personDataList addObject:orderModel3];
-    
-    ZSOrderModel *orderModel4 = [[ZSOrderModel alloc] init];
-    orderModel4.leftName = @"贷款利率";
-    [self.personDataList addObject:orderModel4];
-    
-    ZSOrderModel *orderModel5 = [[ZSOrderModel alloc] init];
-    orderModel5.leftName = @"担保费率";
-    [self.personDataList addObject:orderModel5];
+    [self requestData];
 }
 
 - (void)configureTopView
@@ -72,14 +58,22 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 4;
+    if (self.repaymentList) {
+        return self.repaymentList.count + 1;
+    } else {
+        return 1;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
         return self.personDataList.count;
     } else {
-        return 1;
+        if (self.repaymentList) {
+            return self.repaymentList.count;
+        } else {
+            return 0;
+        }
     }
 }
 
@@ -91,10 +85,17 @@
         }
         ZSOrderModel *model = self.personDataList[indexPath.row];
         cell.leftLab.text = model.leftName;
-        cell.rightLab.text = @"";
+        cell.rightLab.text = model.rightData;
         return cell;
     } else {
-        ZSRepaymentDetailsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ZSRepaymentDetailsCell"];
+        ZSRepaymentRepayment *repayment = self.repaymentList[indexPath.section];
+        ZSRepaymentDetailsCell *cell = (ZSRepaymentDetailsCell *)[tableView dequeueReusableCellWithIdentifier:@"ZSRepaymentDetailsCell"];
+        cell.curLimit = [[NSString alloc] initWithFormat:@"%ld", repayment.curLimit];
+        cell.repaidGuaranteeFee = [[NSString alloc] initWithFormat:@"%ld", repayment.repaidGuaranteeFee];
+        cell.repaidMonthAmount = [[NSString alloc] initWithFormat:@"%ld", repayment.repaidMonthAmount];
+        cell.repayGuaranteeFee = [[NSString alloc] initWithFormat:@"%ld", repayment.repayGuaranteeFee];
+        cell.repayMonthDate = [[NSString alloc] initWithFormat:@"%@", repayment.repayMonthDate];
+        cell.repayMonthAmount = [[NSString alloc] initWithFormat:@"%ld", repayment.repayMonthAmount];
         return cell;
     }
 }
@@ -113,6 +114,56 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     return 0.001;
+}
+
+@end
+
+@implementation ZSBillDetailController (Request)
+
+- (void)requestData {
+    if (self.orderIDString == nil) {
+        return;
+    }
+    __weak typeof(self) weakSelf = self;
+    NSMutableDictionary *parameter = [[NSMutableDictionary alloc] initWithCapacity:0];
+    [parameter setValue:self.orderIDString forKey:@"orderId"];
+    [ZSRequestManager requestWithParameter:parameter url:[ZSURLManager getOrderRepayment] SuccessBlock:^(NSDictionary *dic) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        strongSelf.repaymentDetailModel = [ZSRepaymentDetailModel yy_modelWithDictionary:dic];
+        [strongSelf updateRepaymentData];
+    } ErrorBlock:^(NSError *error) {
+        
+    }];
+}
+
+- (void)updateRepaymentData {
+    ZSOrderModel *orderModel1 = [[ZSOrderModel alloc] init];
+    orderModel1.leftName = @"贷款金额";
+    orderModel1.rightData = [[NSString alloc] initWithFormat:@"%ld", self.repaymentDetailModel.repaymentOveriew.loanAmount];
+    [self.personDataList addObject:orderModel1];
+    
+    ZSOrderModel *orderModel2 = [[ZSOrderModel alloc] init];
+    orderModel2.leftName = @"还款期数";
+    orderModel2.rightData = [[NSString alloc] initWithFormat:@"%ld", self.repaymentDetailModel.repaymentOveriew.curRepayLimit];
+    [self.personDataList addObject:orderModel2];
+    
+    ZSOrderModel *orderModel3 = [[ZSOrderModel alloc] init];
+    orderModel3.leftName = @"还款日";
+    orderModel3.rightData = [[NSString alloc] initWithFormat:@"%ld", self.repaymentDetailModel.repaymentOveriew.repayDay];
+    [self.personDataList addObject:orderModel3];
+    
+    ZSOrderModel *orderModel4 = [[ZSOrderModel alloc] init];
+    orderModel4.rightData = [[NSString alloc] initWithFormat:@"%ld", self.repaymentDetailModel.repaymentOveriew.loanRate];
+    orderModel4.leftName = @"贷款利率";
+    [self.personDataList addObject:orderModel4];
+    
+    ZSOrderModel *orderModel5 = [[ZSOrderModel alloc] init];
+    orderModel5.leftName = @"担保费率";
+    orderModel4.rightData = [[NSString alloc] initWithFormat:@"%ld", self.repaymentDetailModel.repaymentOveriew.guaranteeRate];
+    [self.personDataList addObject:orderModel5];
+
+    self.repaymentList = self.repaymentDetailModel.repayment;
+    [self.tableView reloadData];
 }
 
 @end
