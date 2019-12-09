@@ -30,6 +30,7 @@
 @property(nonatomic,copy )NSString *customerManager;     //专属客户经理id
 @property(nonatomic,copy )NSString *customerManagerName; //专属客户经理姓名
 @property(nonatomic,copy )NSString *customerManagerPhone;//专属客户经理电话
+@property (nonatomic, copy) NSString *identityNo;          //身份证号
 
 + (ZSUidInfo *)shareInfo;
 

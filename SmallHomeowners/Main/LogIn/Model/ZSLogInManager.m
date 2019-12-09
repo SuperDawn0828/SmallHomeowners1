@@ -112,6 +112,7 @@
     userInfo.position         = Dic[@"position"] ? Dic[@"position"] : nil;
     userInfo.city             = Dic[@"city"] ? Dic[@"city"] : nil;
     userInfo.cityId           = Dic[@"cityId"] ? Dic[@"cityId"] : nil;
+    userInfo.identityNo       = Dic[@"identityNo"];
     userInfo.customerManager           = Dic[@"customerManager"] ? Dic[@"customerManager"] : nil;
     userInfo.customerManagerName           = Dic[@"customerManagerName"] ? Dic[@"customerManagerName"] : nil;
     userInfo.customerManagerPhone           = Dic[@"customerManagerPhone"] ? Dic[@"customerManagerPhone"] : nil;
