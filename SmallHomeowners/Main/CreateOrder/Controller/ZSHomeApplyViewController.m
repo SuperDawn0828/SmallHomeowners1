@@ -698,10 +698,11 @@ typedef NS_ENUM(NSUInteger, alertViewTag) {
         NSLog(@"%@", dic);
         global.pcOrderDetailModel = [ZSPCOrderDetailModel yy_modelWithDictionary:dic[@"respData"]];
         //页面跳转
-        ZSCreateOrderPersonInfoViewController *createVC = [[ZSCreateOrderPersonInfoViewController alloc]init];
-        createVC.personType = weakSelf.personType;
-        createVC.orderIDString = global.pcOrderDetailModel.order.tid;
-        [weakSelf.navigationController pushViewController:createVC animated:YES];
+        [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+//        ZSCreateOrderPersonInfoViewController *createVC = [[ZSCreateOrderPersonInfoViewController alloc]init];
+//        createVC.personType = weakSelf.personType;
+//        createVC.orderIDString = global.pcOrderDetailModel.order.tid;
+//        [weakSelf.navigationController pushViewController:createVC animated:YES];
         //通知刷新
         [NOTI_CENTER postNotificationName:KSUpdateAllOrderListNotification object:nil];
         [NOTI_CENTER postNotificationName:KSUpdateAllOrderDetailNotification object:nil];

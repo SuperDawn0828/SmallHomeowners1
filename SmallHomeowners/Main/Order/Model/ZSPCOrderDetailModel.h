@@ -61,7 +61,7 @@
 @property (nonatomic , copy  )  NSString                  * tid;                 //订单id
 @property (nonatomic , copy  )  NSString                  * orderNo;             //订单号
 @property (nonatomic , copy  )  NSString                  * createDate;          //创建时间
-@property (nonatomic , copy  )  NSString                  * dataSrc;             //订单来源
+@property (nonatomic , assign  )  NSInteger               dataSrc;            //客户来源 1中介 2线下 3微信 4官网 5中介APP
 @property (nonatomic , copy  )  NSString                  * agencyName;          //所属中介
 @property (nonatomic , copy  )  NSString                  * agentUserId;
 @property (nonatomic , copy  )  NSString                  * agentUserName;       //中介姓名

@@ -253,7 +253,7 @@
     ZSOrderModel *orderNoModel = [[ZSOrderModel alloc]init];
     orderNoModel.leftName = @"订单编号";
     if (model.orderNo) {
-        orderNoModel.rightData = [NSString stringWithFormat:@"%@",model.orderNo];
+        orderNoModel.rightData = [NSString stringWithFormat:@"%@  |  复制",model.orderNo];
     }
     [self.orderDatdArray addObject:orderNoModel];
     
@@ -272,7 +272,7 @@
     //订单来源
     ZSOrderModel *agencyNameModel = [[ZSOrderModel alloc]init];
     agencyNameModel.leftName = @"订单来源";
-    agencyNameModel.rightData = model.agencyName ? model.agencyName : @"";
+    agencyNameModel.rightData = model.dataSrc == 1 ? @"中介" : (model.dataSrc == 2 ? @"线下" : (model.dataSrc == 3 ? @"微信" : (model.dataSrc == 4 ? @"官网" : (model.dataSrc == 5 ? @"中介" : (model.dataSrc == 6 ? @"个人" : @"")))));
     [self.orderDatdArray addObject:agencyNameModel];
 
     //联系方式
@@ -493,7 +493,7 @@
         [self.navigationController pushViewController:detailVC animated:YES];
     }
     //订单信息
-    else if (indexPath.section == 3 && indexPath.row == 0)
+    else if (indexPath.section == 4 && indexPath.row == 0)
     {
         if (global.pcOrderDetailModel.order.orderNo)
         {
