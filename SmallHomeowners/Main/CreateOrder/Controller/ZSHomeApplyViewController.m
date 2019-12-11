@@ -21,7 +21,7 @@ typedef NS_ENUM(NSUInteger, alertViewTag) {
     hasnoPhoneNum     = 2,     //已有订单添加人没有填写手机号
     revalidationPhone = 3,     //修改手机号后是否重新验证
 };
-@interface ZSHomeApplyViewController ()<ZSSingleLineTextTableViewCellDelegate,ZSActionSheetViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,ZSAlertViewDelegate,TZImagePickerControllerDelegate,ZSSLDataCollectionViewDelegate>
+@interface ZSHomeApplyViewController ()<ZSSingleLineTextTableViewCellDelegate,ZSActionSheetViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,ZSAlertViewDelegate,TZImagePickerControllerDelegate,ZSSLDataCollectionViewDelegate, ZSHomeApplyFooterViewDelegate>
 @property(nonatomic,strong)UIImageView    *frontImage;                   //身份证正面
 @property(nonatomic,strong)UIImageView    *reverseImage;                 //身份证反面
 @property(nonatomic,strong)NSMutableArray<ZSDynamicDataModel *> *dataArray;
@@ -35,6 +35,10 @@ typedef NS_ENUM(NSUInteger, alertViewTag) {
 @property(nonatomic,assign)ZSAddResourceDataStyle     addDataStyle;        //添加按钮格式
 @property(nonatomic,strong) NSMutableArray *bdImgArr; //不动产权图片
 @property(nonatomic,strong) NSMutableArray *zxImgArr; //征信报告图片
+
+@property (nonatomic, strong) ZSHomeApplyFooterView *footerView;
+
+@property (nonatomic, assign) BOOL selected;
 
 @end
 
@@ -272,10 +276,12 @@ typedef NS_ENUM(NSUInteger, alertViewTag) {
     headerView.backgroundColor = ZSColorWhite;
     self.tableView.tableHeaderView = headerView;
     
-    ZSHomeApplyFooterView *footerView = [[ZSHomeApplyFooterView alloc] init];
-    footerView.frame = CGRectMake(0,0,375,31);
-    footerView.layer.backgroundColor = [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1.0].CGColor;
-    self.tableView.tableFooterView = footerView;
+    self.footerView = [[ZSHomeApplyFooterView alloc] init];
+    self.footerView.frame = CGRectMake(0,0,375,31);
+    self.footerView.layer.backgroundColor = [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1.0].CGColor;
+    self.footerView.selected = NO;
+    self.footerView.delegate = self;
+    self.tableView.tableFooterView = self.footerView;
     
     //身份证正面
     self.frontImage = [[UIImageView alloc]initWithFrame:CGRectMake(GapWidth*2, GapWidth, imageWidth, imageHeight)];
@@ -317,6 +323,11 @@ typedef NS_ENUM(NSUInteger, alertViewTag) {
     [headerView addSubview:reverseLabel];
 }
 
+- (void)homeApplyFooterViewDidSelected:(ZSHomeApplyFooterView *)view
+{
+    self.selected = view.selected;
+}
+
 #pragma mark tableView
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -327,7 +338,7 @@ typedef NS_ENUM(NSUInteger, alertViewTag) {
     if (indexPath.row == self.dataArray.count-2) {
         return  130;
     }else  if (indexPath.row == self.dataArray.count-1) {
-        return  120;
+        return  130;
     }else{
         return CellHeight;
         
@@ -341,9 +352,19 @@ typedef NS_ENUM(NSUInteger, alertViewTag) {
         cell = [[ZSSingleLineTextTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.delegate = self;
         if (indexPath.row == self.dataArray.count-2) {
+            UILabel *bdLba = [[UILabel alloc]initWithFrame:CGRectMake(20, 0, 200, 32)];
+//            bdLba.text = @"不动产权证 *";
+            bdLba.font = [UIFont systemFontOfSize:13];
+            bdLba.textColor = ZSColorSecondTitle;
+            [cell.contentView addSubview:bdLba];
+            
+            NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"不动产权证 *"];
+            [string addAttributes:@{NSForegroundColorAttributeName: ZSColorGolden} range:NSMakeRange(6, 1)];
+            bdLba.attributedText = string;
+            
             self.dataCollectionView = [[ZSSLDataCollectionView alloc]init];
             self.dataCollectionView.tag = 500;
-            self.dataCollectionView.frame = CGRectMake(0, 0, ZSWIDTH,self.dataCollectionView.height);//top为-34是为了盖住分组title
+            self.dataCollectionView.frame = CGRectMake(0, CGRectGetMaxY(bdLba.frame), ZSWIDTH,self.dataCollectionView.height);//top为-34是为了盖住分组title
             self.dataCollectionView.backgroundColor = ZSViewBackgroundColor;
             self.dataCollectionView.delegate = self;
             self.dataCollectionView.isShowTitle = NO;
@@ -352,23 +373,23 @@ typedef NS_ENUM(NSUInteger, alertViewTag) {
             self.dataCollectionView.titleNameArray = [[NSMutableArray alloc]initWithObjects:@" ", nil];//随便传什么只要数组不为空就可以
             [cell.contentView addSubview:self.dataCollectionView];
             
-            UIView *bdView = [[UIView alloc]initWithFrame:CGRectMake(0, 100, ZSWIDTH, 30)];
-//            bdView.backgroundColor = ZSColorgreen;
-            [cell.contentView addSubview:bdView];
-            
-            UILabel *bdLba = [[UILabel alloc]initWithFrame:CGRectMake(20, 5, 200, 20)];
-            bdLba.text = @"不动产权证";
-            bdLba.font = [UIFont systemFontOfSize:13];
-            bdLba.textColor = ZSColorSecondTitle;
-            [bdView addSubview:bdLba];
-            
             UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 129, ZSWIDTH, 1)];
             lineView.backgroundColor = ZSColorLine;
             [cell.contentView addSubview:lineView];
         }
         if (indexPath.row == self.dataArray.count-1) {
+            UILabel *bdLba = [[UILabel alloc]initWithFrame:CGRectMake(20, 0, 200, 32)];
+//            bdLba.text = @"央行征信报告 *";
+            bdLba.font = [UIFont systemFontOfSize:13];
+            bdLba.textColor = ZSColorSecondTitle;
+            [cell.contentView addSubview:bdLba];
+            
+            NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"央行征信报告 *"];
+            [string addAttributes:@{NSForegroundColorAttributeName: ZSColorGolden} range:NSMakeRange(7, 1)];
+            bdLba.attributedText = string;
+            
             self.dataCollectionView1 = [[ZSSLDataCollectionView alloc]init];
-            self.dataCollectionView1.frame = CGRectMake(0, 0, ZSWIDTH,self.dataCollectionView1.height);//top为-34是为了盖住分组title
+            self.dataCollectionView1.frame = CGRectMake(0, CGRectGetMaxY(bdLba.frame), ZSWIDTH,self.dataCollectionView1.height);//top为-34是为了盖住分组title
             self.dataCollectionView1.backgroundColor = ZSViewBackgroundColor;
             self.dataCollectionView1.delegate = self;
             self.dataCollectionView1.isShowTitle = NO;
@@ -377,14 +398,6 @@ typedef NS_ENUM(NSUInteger, alertViewTag) {
             self.dataCollectionView1.addDataStyle = (ZSAddResourceDataStyle)self.addDataStyle;//添加照片的形式
             self.dataCollectionView1.titleNameArray = [[NSMutableArray alloc]initWithObjects:@" ", nil];//随便传什么只要数组不为空就可以
             [cell.contentView addSubview:self.dataCollectionView1];
-            
-            UILabel *bdLba = [[UILabel alloc]initWithFrame:CGRectMake(20, 100, 200, 20)];
-            //               bdLba.top = 100;
-            //               bdLba.py_centerX = self.dataCollectionView.py_centerX;
-            bdLba.text = @"央行征信报告";
-            bdLba.font = [UIFont systemFontOfSize:13];
-            bdLba.textColor = ZSColorSecondTitle;
-            [cell.contentView addSubview:bdLba];
         }
     }
     if (self.dataArray.count > 0) {
@@ -668,6 +681,11 @@ typedef NS_ENUM(NSUInteger, alertViewTag) {
     //        return;
     //    }
     
+    if (self.selected == false) {
+        [ZSTool showMessage:@"请勾选小房住法律条款" withDuration:DefaultDuration];
+        return;
+    }
+    
     //有必填项没有填
     for (ZSDynamicDataModel *model in self.dataArray) {
         if (model.isNecessary.intValue == 1) {
@@ -690,6 +708,16 @@ typedef NS_ENUM(NSUInteger, alertViewTag) {
             [ZSTool showMessage:@"请输入正确的手机号" withDuration:DefaultDuration];
             return;
         }
+    }
+    
+    if (self.dataCollectionView.itemArray.count <= 0) {
+        [ZSTool showMessage:@"请上传你的不动产证明" withDuration:DefaultDuration];
+        return;
+    }
+    
+    if (self.dataCollectionView1.itemArray.count <= 0) {
+        [ZSTool showMessage:@"请上传你的央行征信报告" withDuration:DefaultDuration];
+        return;
     }
     
     __weak typeof(self) weakSelf = self;

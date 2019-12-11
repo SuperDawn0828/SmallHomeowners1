@@ -10,7 +10,18 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class ZSHomeApplyFooterView;
+@protocol ZSHomeApplyFooterViewDelegate <NSObject>
+
+- (void)homeApplyFooterViewDidSelected:(ZSHomeApplyFooterView *)view;
+
+@end
+
 @interface ZSHomeApplyFooterView : UIView
+
+@property (nonatomic, assign) BOOL selected;
+
+@property (nonatomic, weak) id <ZSHomeApplyFooterViewDelegate> delegate;
 
 @end
 
