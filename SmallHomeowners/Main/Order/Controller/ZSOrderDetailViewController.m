@@ -281,6 +281,12 @@
     agencyContactPhoneModel.rightData = model.agencyContactPhone ? model.agencyContactPhone : @"";
     [self.orderDatdArray addObject:agencyContactPhoneModel];
     
+    if (model.dataSrc == 6) {
+        self.billDetailButton.hidden = NO;
+    } else {
+        self.billDetailButton.hidden = YES;
+    }
+    
     //刷新tableview
     [self.tableView reloadData];
 }
@@ -331,7 +337,7 @@
     self.billDetailButton.titleLabel.font = [UIFont systemFontOfSize:14];
     [self.billDetailButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.billDetailButton addTarget:self action:@selector(billDetailButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-    self.billDetailButton.hidden = self.isFromCreateOrder;
+    self.billDetailButton.hidden = YES;
     [self.topHeaderView addSubview:self.billDetailButton];
     
     //联系客户经理按钮
