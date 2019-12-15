@@ -149,36 +149,12 @@
         self.personDatdArray = [[NSMutableArray alloc]initWithArray:global.pcOrderDetailModel.customers];
     }
     
-    //-------------------------------------贷款信息-------------------------------------//
-    //所在城市
-//    ZSOrderModel *cityModel = [[ZSOrderModel alloc]init];
-//    cityModel.leftName = @"所在城市";
-//    cityModel.rightData = model.loanCity ? model.loanCity : @"";
-//    [self.loanDatdArray addObject:cityModel];
-  
-    //合同总价
-    //星速贷,代办业务
-//    if ([global.prdType isEqualToString:kProduceTypeStarLoan] || [global.prdType isEqualToString:kProduceTypeAgencyBusiness])
-//    {
-//        ZSOrderModel *contractAmountModel = [[ZSOrderModel alloc]init];
-//        contractAmountModel.leftName = @"合同总价";
-//        contractAmountModel.rightData = model.contractAmount ? [NSString stringWithFormat:@"%@ 元",[NSString ReviseString:model.contractAmount]] : @"";
-//        [self.loanDatdArray addObject:contractAmountModel];
-//    }
-    
     //申请贷款总额
     ZSOrderModel *applyLoanAmountModel = [[ZSOrderModel alloc]init];
     applyLoanAmountModel.leftName = [NSString stringWithFormat:@"申请%@金额",[ZSGlobalModel changeLoanString:@"贷款"]];
-    applyLoanAmountModel.rightData = model.applyLoanAmount ? [NSString stringWithFormat:@"%@ 元",[NSString ReviseString:model.applyLoanAmount]] : @"";
+    applyLoanAmountModel.rightData = model.loanAmount ? [NSString stringWithFormat:@"%@ 元",[NSString ReviseString:model.loanAmount]] : @"";
     [self.loanDatdArray addObject:applyLoanAmountModel];
     
-//    //贷款年限
-//    ZSOrderModel *loanLimitModel = [[ZSOrderModel alloc]init];
-//    loanLimitModel.leftName = [NSString stringWithFormat:@"%@年限",[ZSGlobalModel changeLoanString:@"贷款"]];
-//    loanLimitModel.rightData = model.loanLimit ? [NSString stringWithFormat:@"%@ 年",model.loanLimit] : @"";
-//    [self.loanDatdArray addObject:loanLimitModel];
-    
-    //-------------------------------------房产信息-------------------------------------//
     //不动产权证
     ZSDynamicDataModel *realEstateModel = [[ZSDynamicDataModel alloc]init];
     realEstateModel.fieldMeaning = @"不动产权证";
@@ -194,60 +170,8 @@
     bankCreditsModel.isNecessary = @"0";
     bankCreditsModel.rightData = global.pcOrderDetailModel.customers.firstObject.bankCredits;
     [self.bankCreditsArray addObject:bankCreditsModel];
-    
-//    //楼盘名称
-//    ZSOrderModel *nameModel = [[ZSOrderModel alloc]init];
-//    nameModel.leftName = @"楼盘名称";
-//    nameModel.rightData = model.projName ? model.projName : @"";
-//    [self.houseDatdArray addObject:nameModel];
-//
-//    //楼盘地址
-//    ZSOrderModel *provinceModel = [[ZSOrderModel alloc]init];
-//    provinceModel.leftName = @"楼盘地址";
-//    NSString *addressString = @"";
-//    if (model.province && model.city && model.area) {
-//        addressString = [NSString stringWithFormat:@"%@%@%@",model.province,model.city,model.area];
-//    }
-//    if (model.address) {
-//        addressString = [NSString stringWithFormat:@"%@%@",addressString,model.address];
-//    }
-//    provinceModel.rightData = addressString;
-//    [self.houseDatdArray addObject:provinceModel];
-//
-//    //楼栋房号
-//    ZSOrderModel *roomNumModel = [[ZSOrderModel alloc]init];
-//    roomNumModel.leftName = @"楼栋房号";
-//    roomNumModel.rightData = model.houseNum ? model.houseNum : @"";
-//    [self.houseDatdArray addObject:roomNumModel];
-//
-//    //权证号
-//    ZSOrderModel *rightModel = [[ZSOrderModel alloc]init];
-//    rightModel.leftName = @"权证号";
-//    rightModel.rightData = model.warrantNo ? model.warrantNo : @"";
-//    [self.houseDatdArray addObject:rightModel];
-//
-//    //房屋功能
-//    ZSOrderModel *houseModel = [[ZSOrderModel alloc]init];
-//    houseModel.leftName = @"房屋功能";
-//    houseModel.rightData = model.housingFunction ? model.housingFunction : @"";
-//    [self.houseDatdArray addObject:houseModel];
-//
-//    //建筑面积
-//    ZSOrderModel *areaModel = [[ZSOrderModel alloc]init];
-//    areaModel.leftName = @"建筑面积";
-//    if (model.coveredArea) {
-//        areaModel.rightData = [NSString stringWithFormat:@"%@ m²",[NSString ReviseString:model.coveredArea]];
-//    }
-//    [self.houseDatdArray addObject:areaModel];
-//
-//    //套内面积
-//    ZSOrderModel *areaModel2 = [[ZSOrderModel alloc]init];
-//    areaModel2.leftName = @"套内面积";
-//    if (model.insideArea) {
-//        areaModel2.rightData = [NSString stringWithFormat:@"%@ m²",[NSString ReviseString:model.insideArea]];
-//    }
-//    [self.houseDatdArray addObject:areaModel2];
-    
+
+        
     //-------------------------------------订单信息-------------------------------------//
     //订单编号
     ZSOrderModel *orderNoModel = [[ZSOrderModel alloc]init];
@@ -281,7 +205,7 @@
     agencyContactPhoneModel.rightData = model.agencyContactPhone ? model.agencyContactPhone : @"";
     [self.orderDatdArray addObject:agencyContactPhoneModel];
     
-    if (model.dataSrc == 6) {
+    if ([model.orderState isEqualToString:@"完成审批"]) {
         self.billDetailButton.hidden = NO;
     } else {
         self.billDetailButton.hidden = YES;
@@ -323,13 +247,6 @@
     self.stateLabel.textColor = ZSColorWhite;
     self.stateLabel.adjustsFontSizeToFitWidth = YES;
     [self.topHeaderView addSubview:self.stateLabel];
-    
-    //提示语
-//    self.noticeLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.stateImageView.right+10, self.stateLabel.bottom, ZSWIDTH-70, 45)];
-//    self.noticeLabel.font = [UIFont systemFontOfSize:15];
-//    self.noticeLabel.textColor = ZSColorWhite;
-//    self.noticeLabel.numberOfLines = 0;
-//    [self.topHeaderView addSubview:self.noticeLabel];
     
     self.billDetailButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.billDetailButton.frame = CGRectMake(UIScreen.mainScreen.bounds.size.width - 90, self.stateLabel.frame.origin.y, 75, 45);
@@ -533,35 +450,6 @@
     //刷新当前tableView(只刷新高度)
     [self.tableView beginUpdates];
     [self.tableView endUpdates];
-}
-
-#pragma mark /*---------------------------------------查看征信报告详情---------------------------------------*/
-- (void)checkCreditReport
-{
-    if (global.pcOrderDetailModel.agentPrecredit)
-    {
-        ZSCreditReportViewController *reportVC = [[ZSCreditReportViewController alloc]init];
-        [self.navigationController pushViewController:reportVC animated:YES];
-    }
-}
-
-#pragma mark /*---------------------------------------提交贷款---------------------------------------*/
-- (void)bottomClick:(UIButton *)sender
-{
-    __weak typeof(self) weakSelf = self;
-    NSMutableDictionary *dict = @{
-                                  @"prdType":global.prdType,
-                                  @"orderId":self.orderIDString,
-                                  }.mutableCopy;
-    [ZSRequestManager requestWithParameter:dict url:[ZSURLManager getSubmitLoan] SuccessBlock:^(NSDictionary *dic) {
-        //通知刷新订单列表
-        [NOTI_CENTER postNotificationName:KSUpdateAllOrderListNotification object:nil];
-        //返回
-        [weakSelf leftAction];
-        //提示
-        [ZSTool showMessage:@"提交成功" withDuration:DefaultDuration];
-    } ErrorBlock:^(NSError *error) {
-    }];
 }
 
 - (void)didReceiveMemoryWarning

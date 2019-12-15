@@ -52,7 +52,7 @@
         if (self.isShowAdd){
             self.mainImageView.image = ImageName(@"list_add_n");
         }else{
-            self.mainImageView.image = ImageName(@"");
+            self.mainImageView.image = nil;
         }
     }
 }

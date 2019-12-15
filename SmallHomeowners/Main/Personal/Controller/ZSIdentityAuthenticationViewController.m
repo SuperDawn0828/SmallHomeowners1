@@ -65,8 +65,11 @@
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
     [dictionary setValue:self.ID forKey:@"identityNo"];
     [dictionary setValue:self.name forKey:@"name"];
+    __weak typeof(self) weakSelf = self;
     [ZSRequestManager requestWithParameter:dictionary url:[ZSURLManager updateUserIdentityNo] SuccessBlock:^(NSDictionary *dic) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
         [ZSTool showMessage:@"认证成功" withDuration:2];
+        [strongSelf.navigationController popViewControllerAnimated:YES];
         NSLog(@"%@", dic);
     } ErrorBlock:^(NSError *error) {
         NSLog(@"%@", error);

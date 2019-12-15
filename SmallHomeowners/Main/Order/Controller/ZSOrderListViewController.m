@@ -11,6 +11,7 @@
 #import "ZSBaseSearchViewController.h"
 #import "ZSOrderDetailViewController.h"
 #import "ZSCreateOrderPersonInfoViewController.h"
+#import "ZSHomeApplyViewController.h"
 
 @interface ZSOrderListViewController ()
 @property (nonatomic,strong)UILabel          *sayhelloLabel;   //打招呼label
@@ -96,6 +97,7 @@
     [ZSRequestManager requestWithParameter:dict url:[ZSURLManager getOrderList] SuccessBlock:^(NSDictionary *dic) {
         [weakSelf endRefreshWitharray:weakSelf.dataArray];
         NSArray *array = dic[@"respData"][@"content"];
+        NSLog(@"%@", array);
         if (array.count > 0) {
             for (NSDictionary *dict in array) {
                 ZSAllListModel *model = [ZSAllListModel yy_modelWithDictionary:dict];
@@ -221,13 +223,15 @@
     if (self.dataArray.count > 0)
     {
         ZSAllListModel *model = self.dataArray[indexPath.row];
-        if ([model.order_state isEqualToString:@"信息录入中"])
+        if (([model.order_state isEqualToString:@"信息录入中"] || [model.order_state isEqualToString:@"待风控调查"]) && model.isConfirmed == 0 && [ZSLogInManager readUserInfo].userType.intValue == 6)
         {
-            ZSCreateOrderPersonInfoViewController *detailVC = [[ZSCreateOrderPersonInfoViewController alloc]init];
-            global.prdType = model.prd_type;
-            detailVC.personType = ZSFromOrderList;
-            detailVC.orderIDString = model.tid;
-            [self.navigationController pushViewController:detailVC animated:YES];
+            ZSHomeApplyViewController *createVC = [[ZSHomeApplyViewController alloc]init];
+            global.prdType = @"1084";
+            global.pcOrderDetailModel = nil;
+            createVC.personType = ZSFromCreateOrderWithAdd;
+            createVC.orderIDString = model.tid;
+            createVC.roleTypeString = @"业务申请";
+            [self.navigationController pushViewController:createVC animated:YES];
         }
         else
         {

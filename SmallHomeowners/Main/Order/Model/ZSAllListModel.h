@@ -17,6 +17,7 @@
 @property(nonatomic,copy)NSString *create_date;     //订单创建时间
 @property(nonatomic,copy)NSString *order_state;     //订单状态(文字)
 @property(nonatomic,copy)NSString *tid;             //订单id
+@property(nonatomic, assign) NSInteger isConfirmed;
 //@property(nonatomic,copy)NSString *remain_time;     //订单停留时间
 //@property(nonatomic,copy)NSString *state_result;    //订单类型 0待处理 1已处理
 //@property(nonatomic,copy)NSString *process_date;    //订单流转到当前节点的时间

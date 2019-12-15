@@ -72,7 +72,11 @@ typedef NS_ENUM(NSUInteger, alertViewTag) {
     //UI
     [self configureViews];
     //Data
-    [self initData];
+    if (self.orderIDString) {
+        [self requestData];
+    }else {
+        [self initData];
+    }
 }
 
 #pragma mark /*---------------------------------------返回事件---------------------------------------*/
@@ -104,6 +108,29 @@ typedef NS_ENUM(NSUInteger, alertViewTag) {
     }
 }
 
+#pragma mark /*---------------------------------------数据填充---------------------------------------*/
+#pragma mark 请求订单详情接口
+- (void)requestData
+{
+    [LSProgressHUD show];
+    __weak typeof(self) weakSelf = self;
+    NSMutableDictionary *dict = @{
+                                  @"prdType":global.prdType,
+                                  @"orderId":self.orderIDString ? self.orderIDString : global.pcOrderDetailModel.order.tid,
+                                  }.mutableCopy;
+    [ZSRequestManager requestWithParameter:dict url:[ZSURLManager getAgentOrderDetail] SuccessBlock:^(NSDictionary *dic) {
+        //订单详情存值
+        NSLog(@"%@", dic);
+        global.pcOrderDetailModel = [ZSPCOrderDetailModel yy_modelWithDictionary:dic[@"respData"]];
+        //数据填充
+        [weakSelf initData];
+        [LSProgressHUD hide];
+    } ErrorBlock:^(NSError *error) {
+        [LSProgressHUD hide];
+    }];
+}
+
+
 #pragma mark /*------------------------------------------数据填充------------------------------------------*/
 - (void)initData
 {
@@ -130,6 +157,7 @@ typedef NS_ENUM(NSUInteger, alertViewTag) {
     DKRModel.fieldMeaning = @"申请贷款金额";
     DKRModel.isNecessary = @"1";
     DKRModel.fieldType = @"4";
+    
     //    不动产权
     ZSDynamicDataModel *propertyRightModel = [[ZSDynamicDataModel alloc]init];
     propertyRightModel.fieldMeaning = @"不动产权证";
@@ -142,62 +170,19 @@ typedef NS_ENUM(NSUInteger, alertViewTag) {
     zxbgModel.isNecessary = @"0";
     zxbgModel.fieldType = @"5";
     
-    
-    
-    //    //婚姻状况
-    //    ZSDynamicDataModel *marryModel = [[ZSDynamicDataModel alloc]init];
-    //    marryModel.fieldMeaning = @"婚姻状况";
-    //    marryModel.isNecessary = @"1";
-    //    marryModel.fieldType = @"5";
-    //
-    //户口本
-//    ZSDynamicDataModel *DontMove = [[ZSDynamicDataModel alloc]init];
-//    DontMove.fieldMeaning = @"不动产权";
-//    DontMove.isNecessary = @"0";
-//    DontMove.fieldType = @"5";
-    //
-    //央行征信报告
-    //    ZSDynamicDataModel *reportModel = [[ZSDynamicDataModel alloc]init];
-    //    reportModel.fieldMeaning = @"央行征信报告";
-    //    reportModel.isNecessary = @"0";
-    //    reportModel.fieldType = @"5";
-    
     //现有订单编辑人员信息
-    if (self.personType == ZSFromExistingOrderWithEditor)
+    if (global.pcOrderDetailModel)
     {
-        if (global.currentCustomer.identityPos) {
-            [self.frontImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@?w=200",APPDELEGATE.zsImageUrl,global.currentCustomer.identityPos]] placeholderImage:ImageName(@"身份证正面")];
-            self.urlFront = global.currentCustomer.identityPos;
-        }
-        if (global.currentCustomer.identityBak) {
-            [self.reverseImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@?w=200",APPDELEGATE.zsImageUrl,global.currentCustomer.identityBak]] placeholderImage:ImageName(@"身份证反面")];
-            self.urlBack = global.currentCustomer.identityBak;
-        }
-        if (global.currentCustomer.name) {
-            nameModel.rightData = global.currentCustomer.name;
-        }
-        if (global.currentCustomer.identityNo) {
-            IDCardModel.rightData = global.currentCustomer.identityNo;
-        }
-        if (global.currentCustomer.cellphone) {
-            phoneModel.rightData = global.currentCustomer.cellphone;
-        }
-        //        if (global.currentCustomer.beMarrage) {
-        //            marryModel.rightData = [ZSGlobalModel getMarrayStateWithCode:global.currentCustomer.beMarrage];
-        //        }
-        if (global.currentCustomer.houseRegisterMaster || global.currentCustomer.houseRegisterPersonal) {
-            NSMutableDictionary *dict = [[NSMutableDictionary alloc]init];
-            if (global.currentCustomer.houseRegisterMaster) {
-                [dict setObject:global.currentCustomer.houseRegisterMaster forKey:@"houseRegisterMaster"];
-            }
-            if (global.currentCustomer.houseRegisterPersonal) {
-                [dict setObject:global.currentCustomer.houseRegisterPersonal forKey:@"houseRegisterPersonal"];
-            }
-            //            residenceModel.rightData = [NSString dictoryToString:dict];
-        }
-        //        if (global.currentCustomer.bankCredits) {
-        //            reportModel.rightData = global.currentCustomer.bankCredits;
-        //        }
+        [self.frontImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@?w=200",APPDELEGATE.zsImageUrl,global.pcOrderDetailModel.customers.firstObject.identityPos]] placeholderImage:ImageName(@"身份证正面")];
+        self.urlFront = global.pcOrderDetailModel.customers.firstObject.identityPos;
+        
+        [self.reverseImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@?w=200",APPDELEGATE.zsImageUrl,global.pcOrderDetailModel.customers.firstObject.identityBak]] placeholderImage:ImageName(@"身份证反面")];
+        self.urlBack = global.pcOrderDetailModel.customers.firstObject.identityBak;
+        
+        nameModel.rightData = global.pcOrderDetailModel.customers.firstObject.name;
+        IDCardModel.rightData = global.pcOrderDetailModel.customers.firstObject.identityNo;
+        phoneModel.rightData = global.pcOrderDetailModel.customers.firstObject.cellphone;
+        DKRModel.rightData = global.pcOrderDetailModel.order.loanAmount;
     }
     
     //添加值
@@ -210,38 +195,6 @@ typedef NS_ENUM(NSUInteger, alertViewTag) {
     [self.dataArray addObject:zxbgModel];
     
     self.addDataStyle = ZSAddResourceDataCountless;
-    NSMutableArray *imgArray = @[].mutableCopy;
-    
-    ZSWSFileCollectionModel *fileModel1 = [[ZSWSFileCollectionModel alloc]init];
-    fileModel1.dataId = @"";
-    fileModel1.currentIndex = 2;
-    
-    [imgArray addObject:fileModel1];
-    
-    NSMutableArray *itemDataArray = [[NSMutableArray alloc]initWithObjects:imgArray,nil];
-    self.dataCollectionView.itemArray = itemDataArray;
-    [self.dataCollectionView.myCollectionView reloadData];
-    [self.dataCollectionView layoutSubviews];
-    self.dataCollectionView.height = self.dataCollectionView.myCollectionView.height;
-    
-    NSMutableArray *imgArray2 = @[].mutableCopy;
-    
-    ZSWSFileCollectionModel *fileModel2 = [[ZSWSFileCollectionModel alloc]init];
-    fileModel2.dataId = @"";
-    fileModel2.currentIndex = 3;
-    [imgArray2 addObject:fileModel2];
-    
-    NSMutableArray *itemDataArray2 = [[NSMutableArray alloc]initWithObjects:imgArray2,nil];
-    self.dataCollectionView1.itemArray = itemDataArray2;
-    [self.dataCollectionView1.myCollectionView reloadData];
-    [self.dataCollectionView1 layoutSubviews];
-    self.dataCollectionView1.height = self.dataCollectionView1.myCollectionView.height;
-    
-    //    if ([self.roleTypeString isEqualToString:@"贷款人信息"] || [self.roleTypeString isEqualToString:@"卖方信息"]) {//配偶不需要添加婚姻状况
-    //        [self.dataArray addObject:marryModel];
-    //    }
-    //    [self.dataArray addObject:residenceModel];
-    //    [self.dataArray addObject:reportModel];
     
     //刷新table
     [self.tableView reloadData];
@@ -279,7 +232,7 @@ typedef NS_ENUM(NSUInteger, alertViewTag) {
     self.footerView = [[ZSHomeApplyFooterView alloc] init];
     self.footerView.frame = CGRectMake(0,0,375,31);
     self.footerView.layer.backgroundColor = [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1.0].CGColor;
-    self.footerView.selected = NO;
+    self.footerView.selected = YES;
     self.footerView.delegate = self;
     self.tableView.tableFooterView = self.footerView;
     
@@ -353,7 +306,6 @@ typedef NS_ENUM(NSUInteger, alertViewTag) {
         cell.delegate = self;
         if (indexPath.row == self.dataArray.count-2) {
             UILabel *bdLba = [[UILabel alloc]initWithFrame:CGRectMake(20, 0, 200, 32)];
-//            bdLba.text = @"不动产权证 *";
             bdLba.font = [UIFont systemFontOfSize:13];
             bdLba.textColor = ZSColorSecondTitle;
             [cell.contentView addSubview:bdLba];
@@ -361,7 +313,7 @@ typedef NS_ENUM(NSUInteger, alertViewTag) {
             NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"不动产权证 *"];
             [string addAttributes:@{NSForegroundColorAttributeName: ZSColorGolden} range:NSMakeRange(6, 1)];
             bdLba.attributedText = string;
-            
+                        
             self.dataCollectionView = [[ZSSLDataCollectionView alloc]init];
             self.dataCollectionView.tag = 500;
             self.dataCollectionView.frame = CGRectMake(0, CGRectGetMaxY(bdLba.frame), ZSWIDTH,self.dataCollectionView.height);//top为-34是为了盖住分组title
@@ -371,6 +323,16 @@ typedef NS_ENUM(NSUInteger, alertViewTag) {
             self.dataCollectionView.myCollectionView.scrollEnabled = NO;
             self.dataCollectionView.addDataStyle = (ZSAddResourceDataStyle)self.addDataStyle;//添加照片的形式
             self.dataCollectionView.titleNameArray = [[NSMutableArray alloc]initWithObjects:@" ", nil];//随便传什么只要数组不为空就可以
+            
+            if (global.pcOrderDetailModel.warrantImg.count > 0) {
+                NSMutableArray<ZSWSFileCollectionModel *> *fileModels = [[NSMutableArray alloc] initWithCapacity:0];
+                for (WarrantImg * img in global.pcOrderDetailModel.warrantImg) {
+                    ZSWSFileCollectionModel *model = [[ZSWSFileCollectionModel alloc] init];
+                    model.dataUrl = img.dataUrl;
+                    [fileModels addObject:model];
+                }
+                self.dataCollectionView.itemArray = @[fileModels].mutableCopy;
+            }
             [cell.contentView addSubview:self.dataCollectionView];
             
             UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 129, ZSWIDTH, 1)];
@@ -379,14 +341,10 @@ typedef NS_ENUM(NSUInteger, alertViewTag) {
         }
         if (indexPath.row == self.dataArray.count-1) {
             UILabel *bdLba = [[UILabel alloc]initWithFrame:CGRectMake(20, 0, 200, 32)];
-//            bdLba.text = @"央行征信报告 *";
+            bdLba.text = @"央行征信报告";
             bdLba.font = [UIFont systemFontOfSize:13];
             bdLba.textColor = ZSColorSecondTitle;
             [cell.contentView addSubview:bdLba];
-            
-            NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"央行征信报告 *"];
-            [string addAttributes:@{NSForegroundColorAttributeName: ZSColorGolden} range:NSMakeRange(7, 1)];
-            bdLba.attributedText = string;
             
             self.dataCollectionView1 = [[ZSSLDataCollectionView alloc]init];
             self.dataCollectionView1.frame = CGRectMake(0, CGRectGetMaxY(bdLba.frame), ZSWIDTH,self.dataCollectionView1.height);//top为-34是为了盖住分组title
@@ -398,6 +356,18 @@ typedef NS_ENUM(NSUInteger, alertViewTag) {
             self.dataCollectionView1.addDataStyle = (ZSAddResourceDataStyle)self.addDataStyle;//添加照片的形式
             self.dataCollectionView1.titleNameArray = [[NSMutableArray alloc]initWithObjects:@" ", nil];//随便传什么只要数组不为空就可以
             [cell.contentView addSubview:self.dataCollectionView1];
+            
+            if (global.pcOrderDetailModel.customers.firstObject.bankCredits) {
+                NSArray<NSString *> *urlString = [global.pcOrderDetailModel.customers.firstObject.bankCredits componentsSeparatedByString:@","];
+                NSMutableArray<ZSWSFileCollectionModel *> *fileModels = [[NSMutableArray alloc] initWithCapacity:0];
+                for (NSString *string in urlString) {
+                    ZSWSFileCollectionModel *model = [[ZSWSFileCollectionModel alloc] init];
+                    model.dataUrl =string;
+                    [fileModels addObject:model];
+                }
+                self.dataCollectionView1.itemArray = @[fileModels].mutableCopy;
+            }
+
         }
     }
     if (self.dataArray.count > 0) {
@@ -424,25 +394,12 @@ typedef NS_ENUM(NSUInteger, alertViewTag) {
     }
     NSLog(@"----%@",self.dataCollectionView.itemArray);
     [self.dataCollectionView.itemArray  enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-
         NSLog(@"array==%@",obj);
         [self.bdImgArr addObject:obj];
-//
-//        for (ZSWSFileCollectionModel *colletionModel in obj) {
-//            //                    ZSWSFileCollectionModel *mode = (ZSWSFileCollectionModel *)obj;
-//        }
-
     }];
     [self.dataCollectionView1.itemArray  enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-
         NSLog(@"array==%@",obj);
         [self.zxImgArr addObject:obj];
-
-//        for (ZSWSFileCollectionModel *colletionModel in obj) {
-//            //                    ZSWSFileCollectionModel *mode = (ZSWSFileCollectionModel *)obj;
-//            [self.zxImgArr addObject:colletionModel];
-//        }
-
     }];
     
     [self.tableView reloadData];
@@ -671,15 +628,15 @@ typedef NS_ENUM(NSUInteger, alertViewTag) {
 #pragma mark /*------------------------------------------保存信息------------------------------------------*/
 - (void)bottomClick:(UIButton *)sender
 {
-    //    if (!self.urlFront) {
-    //        [ZSTool showMessage:@"请上传身份证正面照片" withDuration:DefaultDuration];
-    //        return;
-    //    }
-    //
-    //    if (!self.urlBack) {
-    //        [ZSTool showMessage:@"请上传身份证反面照片" withDuration:DefaultDuration];
-    //        return;
-    //    }
+    if (!self.urlFront) {
+        [ZSTool showMessage:@"请上传身份证正面照片" withDuration:DefaultDuration];
+        return;
+    }
+
+    if (!self.urlBack) {
+        [ZSTool showMessage:@"请上传身份证反面照片" withDuration:DefaultDuration];
+        return;
+    }
     
     if (self.selected == false) {
         [ZSTool showMessage:@"请勾选小房住法律条款" withDuration:DefaultDuration];
@@ -714,12 +671,7 @@ typedef NS_ENUM(NSUInteger, alertViewTag) {
         [ZSTool showMessage:@"请上传你的不动产证明" withDuration:DefaultDuration];
         return;
     }
-    
-    if (self.dataCollectionView1.itemArray.count <= 0) {
-        [ZSTool showMessage:@"请上传你的央行征信报告" withDuration:DefaultDuration];
-        return;
-    }
-    
+        
     __weak typeof(self) weakSelf = self;
     [ZSRequestManager requestWithParameter:[self uploadOrderParameter] url:[ZSURLManager getAddOrUpdateCustomer] SuccessBlock:^(NSDictionary *dic) {
         //订单详情存值
@@ -727,10 +679,6 @@ typedef NS_ENUM(NSUInteger, alertViewTag) {
         global.pcOrderDetailModel = [ZSPCOrderDetailModel yy_modelWithDictionary:dic[@"respData"]];
         //页面跳转
         [weakSelf.navigationController popToRootViewControllerAnimated:YES];
-//        ZSCreateOrderPersonInfoViewController *createVC = [[ZSCreateOrderPersonInfoViewController alloc]init];
-//        createVC.personType = weakSelf.personType;
-//        createVC.orderIDString = global.pcOrderDetailModel.order.tid;
-//        [weakSelf.navigationController pushViewController:createVC animated:YES];
         //通知刷新
         [NOTI_CENTER postNotificationName:KSUpdateAllOrderListNotification object:nil];
         [NOTI_CENTER postNotificationName:KSUpdateAllOrderDetailNotification object:nil];
@@ -796,46 +744,29 @@ typedef NS_ENUM(NSUInteger, alertViewTag) {
     if (self.dataArray[2].rightData.length) {
         [dict setObject:self.dataArray[2].rightData forKey:@"cellphone"];
     }
-    //婚姻状况 户口本 央行征信报告
-    if ([self.roleTypeString isEqualToString:@"贷款人信息"] || [self.roleTypeString isEqualToString:@"卖方信息"]) {//配偶不需要添加婚姻状况
-        //婚姻状况
-        [dict setObject:[ZSGlobalModel getMarrayCodeWithState:self.dataArray[3].rightData] forKey:@"beMarrage"];
-        //户口本
-        if (self.dataArray[4].rightData.length) {
-            NSDictionary *newDic = [NSString stringToDictory:self.dataArray[4].rightData];
-            [dict setObject:newDic[@"houseRegisterMaster"] ? newDic[@"houseRegisterMaster"] : @"" forKey:@"houseRegisterMaster"];
-            [dict setObject:newDic[@"houseRegisterPersonal"] ? newDic[@"houseRegisterPersonal"] : @"" forKey:@"houseRegisterPersonal"];
-        }
-        //央行征信报告
-        if (self.dataArray[5].rightData.length) {
-            [dict setObject:self.dataArray[5].rightData forKey:@"bankCredits"];
-        }
-    }
-    else
-    {
-        //不动产证
-        if (self.dataCollectionView.itemArray.count > 0) {
-            NSMutableArray<NSString *> *list = [[NSMutableArray alloc] initWithCapacity:0];
-            for (ZSWSFileCollectionModel *element in (NSMutableArray *)[self.dataCollectionView.itemArray firstObject]) {
-                if (element.dataUrl) {
-                    [list addObject:element.dataUrl];
-                }
+    //不动产证
+    if (self.dataCollectionView.itemArray.count > 0) {
+        NSMutableArray<NSString *> *list = [[NSMutableArray alloc] initWithCapacity:0];
+        for (ZSWSFileCollectionModel *element in (NSMutableArray *)[self.dataCollectionView.itemArray firstObject]) {
+            if (element.dataUrl) {
+                [list addObject:element.dataUrl];
             }
-            NSString *string = [list componentsJoinedByString:@","];
-            [dict setObject:string forKey:@"houseEstateCredentials"];
         }
-        //央行征信报告
-        if (self.dataCollectionView1.itemArray.count > 0) {
-            NSMutableArray<NSString *> *list = [[NSMutableArray alloc] initWithCapacity:0];
-            for (ZSWSFileCollectionModel *element in (NSMutableArray *)[self.dataCollectionView1.itemArray firstObject]) {
-                if (element.dataUrl) {
-                    [list addObject:element.dataUrl];
-                }
-            }
-            NSString *string = [list componentsJoinedByString:@","];
-            [dict setObject:string forKey:@"bankCredits"];
-        }
+        NSString *string = [list componentsJoinedByString:@","];
+        [dict setObject:string forKey:@"houseEstateCredentials"];
     }
+    //央行征信报告
+    if (self.dataCollectionView1.itemArray.count > 0) {
+        NSMutableArray<NSString *> *list = [[NSMutableArray alloc] initWithCapacity:0];
+        for (ZSWSFileCollectionModel *element in (NSMutableArray *)[self.dataCollectionView1.itemArray firstObject]) {
+            if (element.dataUrl) {
+                [list addObject:element.dataUrl];
+            }
+        }
+        NSString *string = [list componentsJoinedByString:@","];
+        [dict setObject:string forKey:@"bankCredits"];
+    }
+
     //订单id
     if (global.pcOrderDetailModel.order.tid) {
         [dict setObject:global.pcOrderDetailModel.order.tid forKey:@"orderId"];
@@ -845,25 +776,6 @@ typedef NS_ENUM(NSUInteger, alertViewTag) {
         [dict setObject:global.currentCustomer.tid forKey:@"custId"];
     }
     return dict;
-}
-
-#pragma mark /*------------------------------------------删除人员信息------------------------------------------*/
-- (void)RightBtnAction:(UIButton*)sender
-{
-    if ([self.roleTypeString isEqualToString:@"卖方信息"])
-    {
-        ZSAlertView *alert = [[ZSAlertView alloc]initWithFrame:CGRectMake(0, 0, ZSWIDTH, ZSHEIGHT) withNotice:@"删除后信息将无法恢复，同时卖方配偶信息会一并删除，是否确认删除？" sureTitle:@"确认" cancelTitle:@"取消"];
-        alert.delegate = self;
-        alert.tag = deletePersonTag;
-        [alert show];
-    }
-    else
-    {
-        ZSAlertView *alert = [[ZSAlertView alloc]initWithFrame:CGRectMake(0, 0, ZSWIDTH, ZSHEIGHT) withNotice:@"删除后信息将无法恢复，是否确认删除" sureTitle:@"确定" cancelTitle:@"取消"];
-        alert.delegate = self;
-        alert.tag = deletePersonTag;
-        [alert show];
-    }
 }
 
 - (void)AlertView:(ZSAlertView *)alert;
@@ -898,4 +810,7 @@ typedef NS_ENUM(NSUInteger, alertViewTag) {
 {
     [super didReceiveMemoryWarning];
 }
+
+
+
 @end

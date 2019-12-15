@@ -75,8 +75,8 @@
         if (model.contractAmount) {
             contractAmountModel.rightData = [NSString stringWithFormat:@"%@",[NSString ReviseString:model.contractAmount]];
         }
-        if (model.applyLoanAmount) {
-            applyLoanAmountModel.rightData = [NSString stringWithFormat:@"%@",[NSString ReviseString:model.applyLoanAmount]];
+        if (model.loanAmount) {
+            applyLoanAmountModel.rightData = [NSString stringWithFormat:@"%@",[NSString ReviseString:model.loanAmount]];
         }
         if (model.loanLimit) {
             loanLimitModel.rightData = [NSString stringWithFormat:@"%@",model.loanLimit];

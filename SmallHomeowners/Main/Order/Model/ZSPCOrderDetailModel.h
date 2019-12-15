@@ -84,7 +84,7 @@
 @property (nonatomic , copy  )  NSString                  * area;
 @property (nonatomic , copy  )  NSString                  * loanCityId;          //所在城市id
 @property (nonatomic , copy  )  NSString                  * loanCity;            //所在城市名称
-@property (nonatomic , copy  )  NSString                  * applyLoanAmount;     //申请贷款金额
+@property (nonatomic , copy  )  NSString                  * loanAmount;     //申请贷款金额
 @property (nonatomic , copy  )  NSString                  * contractAmount;      //合同总价
 @property (nonatomic , copy  )  NSString                  * loanLimit;           //贷款年限
 @property (nonatomic , copy  )  NSString                  * loanBank2;           //贷款银行
